@@ -2,8 +2,7 @@
 
 Brief: `PROMPT (1).md`. Research: `gemini-code-1790761340705.md` (principles only). UI/UX Pro Max + Taste Skill: `claude_code_skills.md` (the user supplied this file as the skill; no `ui-ux-pro-max` SKILL.md is installed on this machine).
 
-Status: see "Progress" at the bottom.
-
+Status: see "Progress" at bottom
 ---
 
 ## 1. Content ledger
