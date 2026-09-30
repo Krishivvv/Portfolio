@@ -1,0 +1,103 @@
+/* Landing-only presentation. Functional routes never load this file's rules
+   for anything they render. */
+
+/* Skip animation: exists only while the intro plays. */
+.skip-intro {
+  display: none;
+}
+html[data-intro="play"] .skip-intro {
+  display: inline-flex;
+}
+
+/* Hero intro — CSS keyframes, gated by the inline script's decision. */
+.intro-line {
+  display: block;
+  overflow: clip;
+  /* Room for descenders and overshoot inside the mask. */
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
+}
+.intro-line > span {
+  display: block;
+}
+
+html[data-intro="play"] .intro-line > span {
+  animation: intro-line 560ms var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * var(--stagger));
+}
+html[data-intro="play"] .intro-item {
+  animation: intro-item 460ms var(--ease-out) both;
+  animation-delay: calc(140ms + var(--i, 0) * 60ms);
+}
+
+@keyframes intro-line {
+  from {
+    transform: translateY(104%);
+  }
+}
+@keyframes intro-item {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+/* Section reveals, armed after hydration only for content below the fold. */
+[data-reveal] {
+  transition:
+    opacity var(--dur-reveal) var(--ease-out),
+    transform var(--dur-reveal) var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+[data-reveal="pending"] {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: none;
+}
+
+/* Signature diagram: active edges draw from source to target (pathLength="1"),
+   then the arrowhead lands. Compositor-friendly and needs no animation JS. */
+.dg-line {
+  stroke-dasharray: 1;
+}
+[data-draw] .dg-line {
+  animation: dg-draw 550ms var(--ease-out) both;
+}
+[data-draw] .dg-head {
+  animation: dg-head 200ms var(--ease-out) 450ms both;
+}
+@keyframes dg-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+@keyframes dg-head {
+  from {
+    opacity: 0;
+  }
+}
+
+[tabindex="-1"]:focus {
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-intro] .skip-intro {
+    display: none;
+  }
+  html[data-intro] .intro-line > span,
+  html[data-intro] .intro-item {
+    animation: none;
+  }
+  /* The whole list item, so the footer links keep their spacing. */
+  li:has(> .replay-intro) {
+    display: none;
+  }
+}
+
+@media print {
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

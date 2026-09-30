@@ -1,0 +1,263 @@
+@import "tailwindcss";
+
+/* One palette, one accent. Tailwind's default colours are removed on purpose. */
+@theme {
+  --color-*: initial;
+  --color-graphite: #121210;
+  --color-carbon: #1a1a17;
+  --color-seam: #2c2b27;
+  --color-seam-strong: #3a3934;
+  --color-paper: #eeebe4;
+  --color-pencil: #a19c91;
+  --color-lake: #7fb8c4;
+
+  --text-display: clamp(3.4rem, 17vw, 9.75rem);
+  --text-display--line-height: 0.9;
+  --text-display--letter-spacing: -0.045em;
+
+  --radius-tile: 10px;
+}
+
+@theme inline {
+  --font-sans: var(--font-schibsted), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-fragment), ui-monospace, "SFMono-Regular", monospace;
+}
+
+@layer base {
+  html {
+    background: var(--color-graphite);
+    color: var(--color-paper);
+    color-scheme: dark;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background: var(--color-lake);
+    color: var(--color-graphite);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-lake);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p,
+  li,
+  dd {
+    text-wrap: pretty;
+  }
+
+  [id] {
+    scroll-margin-top: 5.5rem;
+  }
+
+  main:focus {
+    outline: none;
+  }
+}
+
+@layer components {
+  /* Tactile feedback lives in the element itself. */
+  .press {
+    transition:
+      transform var(--dur-press) var(--ease-out),
+      background-color var(--dur-hover) var(--ease-out),
+      color var(--dur-hover) var(--ease-out),
+      border-color var(--dur-hover) var(--ease-out);
+  }
+  .press:active {
+    transform: scale(0.97);
+  }
+
+  .btn {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 999px;
+    padding-inline: 1.15rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .btn-primary {
+    background: var(--color-paper);
+    color: var(--color-graphite);
+  }
+  .btn-primary:hover {
+    background: var(--color-lake);
+  }
+  .btn-ghost {
+    border: 1px solid var(--color-seam-strong);
+    color: var(--color-paper);
+  }
+  .btn-ghost:hover {
+    border-color: var(--color-lake);
+    color: var(--color-lake);
+  }
+
+  /* Text link with an underline that draws in on hover. */
+  .link {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    /* Keeps .press's transform in the list so press feedback still eases. */
+    transition:
+      transform var(--dur-press) var(--ease-out),
+      background-size var(--dur-hover) var(--ease-out),
+      color var(--dur-hover) var(--ease-out);
+  }
+  .link:hover {
+    background-size: 100% 1px;
+    color: var(--color-lake);
+  }
+
+  /* Sub-section headings: plain sans, quieter than the section headline. */
+  .subhead {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--color-pencil);
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--color-pencil);
+  }
+
+  /* Architecture diagrams (static on case studies, animated on the landing page).
+     State colours change instantly: SVG paint transitions run on the main thread,
+     and the edge-draw animation already marks each stage change. */
+  .dg-node rect {
+    fill: var(--color-carbon);
+    stroke: var(--color-seam-strong);
+    stroke-width: 1;
+  }
+  .dg-label {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    fill: var(--color-paper);
+  }
+  .dg-sub {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    fill: var(--color-pencil);
+  }
+  .dg-node[data-state="active"] rect {
+    stroke: var(--color-lake);
+  }
+  .dg-node[data-state="active"] .dg-sub {
+    fill: var(--color-lake);
+  }
+  .dg-node[data-state="idle"] rect {
+    stroke: var(--color-seam);
+  }
+  .dg-node[data-state="idle"] .dg-label,
+  .dg-node[data-state="idle"] .dg-sub {
+    fill: var(--color-pencil);
+  }
+  .dg-node[data-state="idle"] .dg-sub {
+    opacity: 0.75;
+  }
+
+  .dg-group rect {
+    fill: none;
+    stroke: var(--color-seam-strong);
+    stroke-dasharray: 4 5;
+  }
+  .dg-group text {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    fill: var(--color-pencil);
+  }
+  .dg-group[data-state="active"] rect {
+    stroke: var(--color-lake);
+  }
+  .dg-group[data-state="active"] text {
+    fill: var(--color-lake);
+  }
+
+  .dg-edge path {
+    fill: none;
+    stroke: var(--color-pencil);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .dg-edge[data-state="active"] path {
+    stroke: var(--color-lake);
+  }
+  .dg-edge[data-state="idle"] path {
+    stroke: var(--color-seam-strong);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+  }
+  .press:active {
+    transform: none;
+  }
+}
+
+/* Print (used by the resume's "Print or save as PDF"): black on white, no
+   site chrome. Tailwind's default colours are removed, so this is plain CSS. */
+@media print {
+  @page {
+    margin: 14mm 16mm;
+  }
+  html {
+    /* rem-based type scales down to a document size */
+    font-size: 11.5px !important;
+  }
+  html,
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+  body > header,
+  body > footer {
+    display: none !important;
+  }
+  .text-paper,
+  .text-pencil,
+  .eyebrow,
+  .subhead {
+    color: #000 !important;
+  }
+  .text-pencil {
+    color: #333 !important;
+  }
+  .border-seam,
+  .border-seam-strong {
+    border-color: #ccc !important;
+  }
+  .bg-seam-strong {
+    background: #999 !important;
+  }
+  a {
+    color: inherit !important;
+    background-image: none !important;
+  }
+}
