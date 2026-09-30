@@ -1,13 +1,12 @@
 "use client";
 
 import { Command } from "cmdk";
-import { ArrowUpRight, CornerDownLeft } from "lucide-react";
+import { CornerDownLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
 
 import { profile } from "@/content/profile";
-import { projects } from "@/content/projects";
-import { sites } from "@/content/sites";
+import { work } from "@/content/work";
 
 import { copyText } from "./copy-text";
 import { navItems } from "./nav-items";
@@ -15,9 +14,10 @@ import { navItems } from "./nav-items";
 type Props = { open: boolean; onOpenChange: (open: boolean) => void };
 
 const itemClass =
-  "flex min-h-11 cursor-pointer items-center justify-between gap-4 rounded-md px-3 text-[0.9375rem] text-pencil data-[selected=true]:bg-carbon data-[selected=true]:text-paper";
+  "flex min-h-11 cursor-pointer items-center justify-between gap-4 rounded-md px-3 text-[0.9375rem] text-ink-2 data-[selected=true]:bg-paper-2 data-[selected=true]:text-ink";
 const groupClass =
-  "[&_[cmdk-group-heading]]:px-3 [&_[cmdk-group-heading]]:pt-3 [&_[cmdk-group-heading]]:pb-1.5 [&_[cmdk-group-heading]]:font-mono [&_[cmdk-group-heading]]:text-[0.75rem] [&_[cmdk-group-heading]]:text-pencil";
+  "[&_[cmdk-group-heading]]:px-3 [&_[cmdk-group-heading]]:pt-3 [&_[cmdk-group-heading]]:pb-1.5 [&_[cmdk-group-heading]]:font-mono [&_[cmdk-group-heading]]:text-[0.75rem] [&_[cmdk-group-heading]]:text-muted";
+const enter = <CornerDownLeft aria-hidden className="size-4 shrink-0 opacity-50" />;
 
 export default function CommandPalette({ open, onOpenChange }: Props) {
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -41,10 +41,6 @@ export default function CommandPalette({ open, onOpenChange }: Props) {
     onOpenChange(false);
     router.push(href);
   };
-  const visit = (url: string) => {
-    onOpenChange(false);
-    window.open(url, "_blank", "noopener,noreferrer");
-  };
 
   return (
     <dialog
@@ -54,7 +50,7 @@ export default function CommandPalette({ open, onOpenChange }: Props) {
       onClick={(e) => {
         if (e.target === e.currentTarget) onOpenChange(false);
       }}
-      className="m-auto mt-[12vh] w-[min(640px,calc(100vw-2rem))] rounded-tile border border-seam-strong bg-graphite p-0 text-paper shadow-2xl backdrop:bg-graphite/70"
+      className="m-auto mt-[12vh] w-[min(640px,calc(100vw-2rem))] rounded-media border border-line-strong bg-paper-3 p-0 text-ink shadow-[0_30px_80px_-20px_rgb(22_21_19/0.35)] backdrop:bg-ink/35"
     >
       <h2 id={titleId} className="sr-only">
         Jump to
@@ -62,61 +58,49 @@ export default function CommandPalette({ open, onOpenChange }: Props) {
       <Command label="Jump to" loop>
         <Command.Input
           ref={inputRef}
-          placeholder="Search sections, projects, websites…"
-          className="h-14 w-full border-b border-seam bg-transparent px-4 text-base text-paper outline-none placeholder:text-pencil"
+          placeholder="Search pages, projects, websites…"
+          className="h-14 w-full border-b border-line bg-transparent px-4 text-base text-ink outline-none placeholder:text-muted"
         />
         <Command.List data-lenis-prevent className="max-h-[min(60vh,420px)] overflow-y-auto overscroll-contain p-2">
-          <Command.Empty className="px-3 py-6 text-pencil">Nothing matches that.</Command.Empty>
+          <Command.Empty className="px-3 py-6 text-muted">Nothing matches that.</Command.Empty>
 
-          <Command.Group heading="Go to" className={groupClass}>
+          <Command.Group heading="Pages" className={groupClass}>
             <Command.Item value="Home" onSelect={() => go("/")} className={itemClass}>
-              Home <CornerDownLeft aria-hidden className="size-4 opacity-60" />
+              Home {enter}
             </Command.Item>
             {navItems.map((item) => (
               <Command.Item key={item.href} value={item.label} onSelect={() => go(item.href)} className={itemClass}>
-                {item.label} <CornerDownLeft aria-hidden className="size-4 opacity-60" />
+                {item.label} {enter}
               </Command.Item>
             ))}
           </Command.Group>
 
-          <Command.Group heading="Case studies" className={groupClass}>
-            {projects.map((p) => (
-              <Command.Item
-                key={p.slug}
-                value={`${p.name} ${p.kind}`}
-                onSelect={() => go(`/work/${p.slug}`)}
-                className={itemClass}
-              >
-                <span>
-                  {p.name} <span className="text-pencil">— {p.kind}</span>
-                </span>
-                <CornerDownLeft aria-hidden className="size-4 shrink-0 opacity-60" />
-              </Command.Item>
-            ))}
-          </Command.Group>
-
-          <Command.Group heading="Websites" className={groupClass}>
-            {sites.map((s) => (
-              <Command.Item key={s.url} value={`${s.name} ${s.domain ?? ""}`} onSelect={() => visit(s.url)} className={itemClass}>
-                <span>
-                  {s.name} {s.domain && <span className="font-mono text-[0.8125rem] text-pencil">{s.domain}</span>}
-                </span>
-                <ArrowUpRight aria-hidden className="size-4 shrink-0 opacity-60" />
-              </Command.Item>
-            ))}
-          </Command.Group>
+          {(["ai", "web"] as const).map((group) => (
+            <Command.Group key={group} heading={group === "ai" ? "AI systems" : "Websites"} className={groupClass}>
+              {work
+                .filter((w) => w.group === group)
+                .map((w) => (
+                  <Command.Item key={w.slug} value={`${w.name} ${w.kind}`} onSelect={() => go(`/work/${w.slug}`)} className={itemClass}>
+                    <span>
+                      {w.name} <span className="text-muted">— {w.kind}</span>
+                    </span>
+                    {enter}
+                  </Command.Item>
+                ))}
+            </Command.Group>
+          ))}
 
           <Command.Group heading="Contact" className={groupClass}>
             <Command.Item
               value="Copy email address"
               onSelect={async () => {
                 const ok = await copyText(profile.email);
-                setStatus(ok ? "Email address copied" : "Couldn't copy; the address is " + profile.email);
+                setStatus(ok ? "Email address copied" : `Couldn't copy; the address is ${profile.email}`);
                 if (ok) onOpenChange(false);
               }}
               className={itemClass}
             >
-              Copy email address <span className="font-mono text-[0.8125rem]">{profile.email}</span>
+              Copy email address <span className="font-mono text-[0.8125rem] text-muted">{profile.email}</span>
             </Command.Item>
             <Command.Item
               value="Write an email to Krishiv"
@@ -126,15 +110,22 @@ export default function CommandPalette({ open, onOpenChange }: Props) {
               }}
               className={itemClass}
             >
-              Write an email <CornerDownLeft aria-hidden className="size-4 opacity-60" />
+              Write an email {enter}
             </Command.Item>
-            <Command.Item value="GitHub" onSelect={() => visit(profile.github.url)} className={itemClass}>
-              GitHub <ArrowUpRight aria-hidden className="size-4 opacity-60" />
+            <Command.Item
+              value="GitHub"
+              onSelect={() => {
+                onOpenChange(false);
+                window.open(profile.github.url, "_blank", "noopener,noreferrer");
+              }}
+              className={itemClass}
+            >
+              GitHub <span className="text-muted">↗</span>
             </Command.Item>
           </Command.Group>
         </Command.List>
       </Command>
-      <p aria-hidden className="flex gap-4 border-t border-seam px-4 py-2.5 font-mono text-[0.75rem] text-pencil">
+      <p aria-hidden className="flex gap-4 border-t border-line px-4 py-2.5 font-mono text-[0.75rem] text-muted">
         <span>↑↓ move</span>
         <span>Enter open</span>
         <span>Esc close</span>

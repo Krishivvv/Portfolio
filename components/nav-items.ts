@@ -1,8 +1,9 @@
-// Section anchors are absolute (/#work) so they work from every page.
 export const navItems = [
-  { label: "Work", href: "/#work" },
-  { label: "Experience", href: "/#experience" },
-  { label: "About", href: "/#about" },
-  { label: "Contact", href: "/#contact" },
+  { label: "Work", href: "/work" },
+  { label: "About", href: "/about" },
+  { label: "Experience", href: "/experience" },
+  { label: "Contact", href: "/contact" },
   { label: "Resume", href: "/resume" },
 ] as const;
+
+export const isCurrent = (pathname: string, href: string) => pathname === href || pathname.startsWith(`${href}/`);

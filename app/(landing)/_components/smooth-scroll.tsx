@@ -5,6 +5,14 @@ import "lenis/dist/lenis.css";
 import type Lenis from "lenis";
 import { useEffect } from "react";
 
+let active: Lenis | undefined;
+
+/** Scroll the landing page to a position: smooth through Lenis when it runs. */
+export function scrollToY(y: number) {
+  if (active) active.scrollTo(y);
+  else window.scrollTo({ top: y, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+}
+
 // Wheel smoothing for the landing page only. Touch stays native and reduced
 // motion gets no Lenis at all; on those devices the library is never even
 // downloaded. Nested scroll areas opt out with data-lenis-prevent.
@@ -44,6 +52,7 @@ export function SmoothScroll() {
         autoRaf: true,
         prevent: (node) => node.hasAttribute("data-lenis-prevent") || node.tagName === "DIALOG",
       });
+      active = lenis;
     });
     document.addEventListener("click", onClick, true);
 
@@ -51,6 +60,7 @@ export function SmoothScroll() {
       cancelled = true;
       document.removeEventListener("click", onClick, true);
       lenis?.destroy();
+      active = undefined;
     };
   }, []);
 

@@ -12,18 +12,22 @@ export default function NotFound() {
     <>
       <SkipLink />
       <SiteHeader />
-      <main id="main" tabIndex={-1} className="focus:outline-none">
-        <div className="mx-auto max-w-[1240px] px-4 py-24 sm:px-8 sm:py-36">
-          <p className="eyebrow">404</p>
-          <h1 className="mt-4 text-5xl font-semibold tracking-[-0.04em] sm:text-7xl">This page doesn’t exist.</h1>
-          <p className="mt-5 max-w-[48ch] text-lg text-pencil">The link may be old or mistyped. Everything on the site starts from the homepage.</p>
-          <div className="mt-10 flex flex-wrap gap-3">
-            <Link href="/" className="btn btn-primary press">
-              Go to the homepage
-            </Link>
-            <Link href="/#work" className="btn btn-ghost press">
-              See the work
-            </Link>
+      <main id="main" tabIndex={-1}>
+        <div className="mx-auto grid max-w-[1320px] gap-10 px-4 py-20 sm:px-8 sm:py-32 lg:grid-cols-12 lg:items-end">
+          <p aria-hidden className="serif text-[clamp(8rem,30vw,22rem)] leading-[0.8] text-accent lg:col-span-6">
+            404
+          </p>
+          <div className="lg:col-span-6">
+            <h1 className="text-[clamp(2.5rem,6vw,5rem)] leading-[0.95] font-semibold tracking-[-0.045em]">This page doesn’t exist.</h1>
+            <p className="mt-5 max-w-[44ch] text-lg text-ink-2">The link may be old or mistyped. Everything on the site starts from the homepage.</p>
+            <div className="mt-10 flex flex-wrap gap-3">
+              <Link href="/" className="group btn btn-primary press">
+                Go to the homepage <span aria-hidden className="nudge">→</span>
+              </Link>
+              <Link href="/work" className="btn btn-ghost press">
+                See the work
+              </Link>
+            </div>
           </div>
         </div>
       </main>

@@ -37,10 +37,10 @@ export function PaletteTrigger() {
         onFocus={loadPalette}
         aria-haspopup="dialog"
         aria-keyshortcuts={apple ? "Meta+K" : "Control+K"}
-        className="btn btn-ghost press hidden text-pencil hover:text-paper sm:inline-flex"
+        className="btn btn-ghost press hidden text-ink-2 hover:text-ink sm:inline-flex"
       >
         Jump to…
-        <kbd className="rounded border border-seam-strong px-1.5 py-0.5 font-mono text-[0.75rem] leading-none text-pencil">
+        <kbd className="rounded border border-line-strong px-1.5 py-0.5 font-mono text-[0.75rem] leading-none text-muted">
           {apple ? "⌘K" : "Ctrl K"}
         </kbd>
       </button>

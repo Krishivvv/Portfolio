@@ -28,6 +28,47 @@ export const skills = {
   tools: ["Jupyter", "Streamlit", "AWS", "Power BI", "Excel", "Google Colab"],
 } as const;
 
+export const skillGroups = [
+  { key: "genai", label: "GenAI & Agents" },
+  { key: "ml", label: "ML & Data" },
+  { key: "backend", label: "Backend & APIs" },
+  { key: "languages", label: "Languages & Core" },
+  { key: "tools", label: "Tools" },
+] as const;
+
+// Which resume skills each project uses, with the resume line that says so.
+// `extra` lists project tech that is not in the resume's skills list.
+export const skillsUsedIn: Record<"voicedesk" | "shiksha" | "veridex", { uses: string[]; extra: string[] }> = {
+  // R:27 ReAct/LangChain agent, RAG, autonomously resolves multi-step queries;
+  // R:29 ChromaDB + sentence-transformers, Whisper; R:31 FastAPI, Streamlit; R:33 tech line.
+  voicedesk: {
+    uses: [
+      "Python",
+      "FastAPI",
+      "LLMs",
+      "RAG",
+      "LangChain",
+      "ReAct agents",
+      "Vector DBs (ChromaDB)",
+      "sentence-transformers",
+      "Agentic workflows",
+      "Whisper",
+      "Streamlit",
+    ],
+    extra: ["LLaMA 3.3"],
+  },
+  // R:39 multiple LLMs; R:41 headless Chromium, FFmpeg, React + Flask; R:43 tech line.
+  shiksha: {
+    uses: ["Python", "Flask", "React", "LLMs"],
+    extra: ["GPT-4o", "Gemini 1.5", "Groq", "FFmpeg", "Pyppeteer"],
+  },
+  // R:47 ResNet-50 transfer learning; R:49 trained on Colab GPU; R:51 tech line.
+  veridex: {
+    uses: ["Python", "PyTorch", "CNNs", "Transfer learning", "Google Colab"],
+    extra: ["ResNet-50"],
+  },
+};
+
 // The resume's own grouping, used verbatim on /resume.
 export const resumeSkills: { label: string; items: string }[] = [
   { label: "Languages & Core", items: "Python, SQL, JavaScript, C++, HTML/CSS, OOP" },

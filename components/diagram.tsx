@@ -68,12 +68,24 @@ export function GroupShape({ group, state = "done" }: { group: DiagramGroup; sta
   );
 }
 
-function StaticLayout({ layout, className }: { layout: DiagramLayout; className: string }) {
+/** One layout as an SVG. `draw` traces every edge in when it mounts (CSS). */
+export function DiagramSvg({
+  layout,
+  className = "",
+  draw = false,
+  style,
+}: {
+  layout: DiagramLayout;
+  className?: string;
+  draw?: boolean;
+  style?: React.CSSProperties;
+}) {
   return (
     <svg
       viewBox={`0 0 ${layout.width} ${layout.height}`}
       className={`dg h-auto w-full ${className}`}
-      style={{ maxWidth: layout.width }}
+      style={{ maxWidth: layout.width, ...style }}
+      data-draw={draw || undefined}
       aria-hidden
     >
       {layout.groups?.map((g) => (
@@ -81,8 +93,8 @@ function StaticLayout({ layout, className }: { layout: DiagramLayout; className:
       ))}
       {layout.edges.map((e) => (
         <g key={e.id} className="dg-edge" data-state="done">
-          <path d={e.d} />
-          <path d={arrowPath(e.end, e.dir)} />
+          <path d={e.d} pathLength={draw ? 1 : undefined} className={draw ? "dg-line" : undefined} />
+          <path d={arrowPath(e.end, e.dir)} className={draw ? "dg-head" : undefined} />
         </g>
       ))}
       {layout.nodes.map((n) => (
@@ -95,8 +107,8 @@ function StaticLayout({ layout, className }: { layout: DiagramLayout; className:
 export function StaticDiagram({ diagram }: { diagram: Diagram }) {
   return (
     <div role="img" aria-label={diagram.title} className="flex justify-center">
-      <StaticLayout layout={diagram.wide} className="hidden min-[75rem]:block" />
-      <StaticLayout layout={diagram.narrow} className="max-w-[400px]! min-[75rem]:hidden" />
+      <DiagramSvg layout={diagram.wide} className="hidden min-[75rem]:block" />
+      <DiagramSvg layout={diagram.narrow} className="max-w-[400px]! min-[75rem]:hidden" />
     </div>
   );
 }

@@ -20,7 +20,7 @@ export function ReplayIntro() {
         } catch {}
         window.location.reload();
       }}
-      className="replay-intro press link inline-flex min-h-11 items-center text-pencil"
+      className="replay-intro press link inline-flex min-h-11 items-center text-night-muted hover:text-night-text"
     >
       Replay intro
     </button>

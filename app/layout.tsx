@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
-import { Fragment_Mono, Schibsted_Grotesk } from "next/font/google";
+import { Fragment_Mono, Instrument_Serif, Schibsted_Grotesk } from "next/font/google";
 
+import { MotionProvider } from "@/components/motion/motion-provider";
 import { profile } from "@/content/profile";
 import { motionCssVars } from "@/lib/motion";
 import { openGraph, siteDescription, siteUrl, twitter } from "@/lib/site";
@@ -10,6 +11,15 @@ import "./globals.css";
 const sans = Schibsted_Grotesk({
   variable: "--font-schibsted",
   subsets: ["latin"],
+  display: "swap",
+});
+
+// Editorial accent words only (italic).
+const serif = Instrument_Serif({
+  variable: "--font-instrument",
+  subsets: ["latin"],
+  weight: "400",
+  style: "italic",
   display: "swap",
 });
 
@@ -39,8 +49,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#121210",
-  colorScheme: "dark",
+  themeColor: "#efebe3",
+  colorScheme: "light",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -48,11 +58,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     // data-intro is set by the landing page's inline script before first paint.
     <html
       lang="en"
-      className={`${sans.variable} ${mono.variable}`}
+      className={`${sans.variable} ${serif.variable} ${mono.variable}`}
       style={motionCssVars}
       suppressHydrationWarning
     >
-      <body className="min-h-dvh bg-graphite text-paper">{children}</body>
+      <body className="min-h-dvh bg-paper text-ink">
+        <MotionProvider>{children}</MotionProvider>
+      </body>
     </html>
   );
 }

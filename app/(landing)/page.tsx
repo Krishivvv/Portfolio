@@ -6,11 +6,12 @@ import { openGraph, siteUrl } from "@/lib/site";
 
 import { About } from "./_components/about";
 import { Capabilities } from "./_components/capabilities";
-import { Contact } from "./_components/contact";
-import { Engineering } from "./_components/engineering";
+import { Closing } from "./_components/closing";
 import { Experience } from "./_components/experience";
 import { Hero } from "./_components/hero";
-import { SelectedWork } from "./_components/selected-work";
+import { InsideShiksha } from "./_components/inside-shiksha";
+import { WorkSystems } from "./_components/work-systems";
+import { WorkWebsites } from "./_components/work-websites";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
@@ -29,6 +30,7 @@ const person = {
   knowsAbout: [...skills.genai.slice(0, 4), "PyTorch", "FastAPI", "React"],
 };
 
+// Each chapter is a sheet that slides over the previous one.
 export default function Home() {
   return (
     <>
@@ -37,12 +39,13 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(person).replace(/</g, "\\u003c") }}
       />
       <Hero />
+      <WorkSystems />
+      <WorkWebsites />
       <Capabilities />
-      <SelectedWork />
       <Experience />
-      <Engineering />
+      <InsideShiksha />
       <About />
-      <Contact />
+      <Closing />
     </>
   );
 }

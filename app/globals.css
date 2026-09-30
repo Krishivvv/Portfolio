@@ -1,33 +1,51 @@
 @import "tailwindcss";
 
-/* One palette, one accent. Tailwind's default colours are removed on purpose. */
+/* Editorial Engineering: warm paper, near-black ink, one vermilion accent, and
+   dark "night" chapters for the engineering story. Tailwind's default colours
+   are removed on purpose. */
 @theme {
   --color-*: initial;
-  --color-graphite: #121210;
-  --color-carbon: #1a1a17;
-  --color-seam: #2c2b27;
-  --color-seam-strong: #3a3934;
-  --color-paper: #eeebe4;
-  --color-pencil: #a19c91;
-  --color-lake: #7fb8c4;
+  --color-paper: #efebe3;
+  --color-paper-2: #e6e1d6;
+  --color-paper-3: #f7f4ee;
+  --color-ink: #161513;
+  --color-ink-2: #44413b;
+  --color-muted: #66625a;
+  --color-line: #d3cdc0;
+  --color-line-strong: #bdb6a8;
+  --color-accent: #b8361a;
+  --color-accent-hover: #9a2b12;
+  --color-accent-bright: #db4a26;
+  --color-night: #121210;
+  --color-night-2: #1b1a17;
+  --color-night-line: #2e2c28;
+  --color-night-text: #eeebe4;
+  --color-night-muted: #a5a095;
+  --color-night-accent: #f2724f;
+  --color-error: #a32a12;
+  --color-white: #ffffff;
 
-  --text-display: clamp(3.4rem, 17vw, 9.75rem);
-  --text-display--line-height: 0.9;
-  --text-display--letter-spacing: -0.045em;
+  /* Also bound by height, so the hero (name, statement, calls to action) fits one screen. */
+  --text-display: clamp(4.25rem, min(19.5vw, calc(62svh - 17.5rem)), 19rem);
+  --text-display--line-height: 0.8;
+  --text-display--letter-spacing: -0.06em;
+  --text-mega: clamp(3rem, 10.5vw, 10rem);
+  --text-mega--line-height: 0.88;
+  --text-mega--letter-spacing: -0.05em;
 
-  --radius-tile: 10px;
+  --radius-media: 8px;
 }
 
 @theme inline {
   --font-sans: var(--font-schibsted), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-instrument), ui-serif, Georgia, serif;
   --font-mono: var(--font-fragment), ui-monospace, "SFMono-Regular", monospace;
 }
 
 @layer base {
   html {
-    background: var(--color-graphite);
-    color: var(--color-paper);
-    color-scheme: dark;
+    background: var(--color-paper);
+    color: var(--color-ink);
     -webkit-text-size-adjust: 100%;
   }
 
@@ -38,14 +56,17 @@
   }
 
   ::selection {
-    background: var(--color-lake);
-    color: var(--color-graphite);
+    background: var(--color-accent);
+    color: var(--color-white);
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-lake);
+    outline: 2px solid var(--color-accent);
     outline-offset: 3px;
     border-radius: 4px;
+  }
+  .night :focus-visible {
+    outline-color: var(--color-night-accent);
   }
 
   h1,
@@ -64,12 +85,19 @@
     scroll-margin-top: 5.5rem;
   }
 
-  main:focus {
+  main:focus,
+  [tabindex="-1"]:focus {
     outline: none;
   }
 }
 
 @layer components {
+  /* Dark chapters: the engineering story and the closing section. */
+  .night {
+    background: var(--color-night);
+    color: var(--color-night-text);
+  }
+
   /* Tactile feedback lives in the element itself. */
   .press {
     transition:
@@ -84,67 +112,154 @@
 
   .btn {
     display: inline-flex;
-    min-height: 44px;
+    min-height: 48px;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.6rem;
     border-radius: 999px;
-    padding-inline: 1.15rem;
+    padding-inline: 1.3rem;
     font-size: 0.9375rem;
     font-weight: 500;
     white-space: nowrap;
   }
   .btn-primary {
-    background: var(--color-paper);
-    color: var(--color-graphite);
+    background: var(--color-accent);
+    color: var(--color-white);
   }
   .btn-primary:hover {
-    background: var(--color-lake);
+    background: var(--color-accent-hover);
   }
   .btn-ghost {
-    border: 1px solid var(--color-seam-strong);
-    color: var(--color-paper);
+    border: 1px solid var(--color-line-strong);
   }
   .btn-ghost:hover {
-    border-color: var(--color-lake);
-    color: var(--color-lake);
+    border-color: var(--color-ink);
+  }
+  .night .btn-ghost {
+    border-color: var(--color-night-line);
+  }
+  .night .btn-ghost:hover {
+    border-color: var(--color-night-text);
+  }
+  .night .btn-primary {
+    background: var(--color-night-accent);
+    color: var(--color-night);
+  }
+  .night .btn-primary:hover {
+    background: var(--color-night-text);
   }
 
-  /* Text link with an underline that draws in on hover. */
+  /* The closing chapter: vermilion with white type (5.86:1). */
+  .flame {
+    background: var(--color-accent);
+    color: var(--color-white);
+  }
+  .flame :focus-visible {
+    outline-color: var(--color-white);
+  }
+  .flame .btn-primary {
+    background: var(--color-white);
+    color: var(--color-ink);
+  }
+  .flame .btn-primary:hover {
+    background: var(--color-paper);
+  }
+  .flame .btn-ghost {
+    border-color: rgb(255 255 255 / 0.5);
+  }
+  .flame .btn-ghost:hover {
+    border-color: var(--color-white);
+  }
+  .flame .eyebrow {
+    color: rgb(255 255 255 / 0.85);
+  }
+  .btn[data-copied] {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+  .flame .btn[data-copied] {
+    border-color: var(--color-white);
+    color: var(--color-white);
+    background: rgb(255 255 255 / 0.14);
+  }
+
+  /* Arrow that nudges forward on hover/focus of its group. */
+  .nudge {
+    display: inline-block;
+    transition: transform var(--dur-hover) var(--ease-out);
+  }
+  .group:hover .nudge,
+  .group:focus-visible .nudge {
+    transform: translateX(4px);
+  }
+  .group:hover .nudge-up,
+  .group:focus-visible .nudge-up {
+    transform: translate(3px, -3px);
+  }
+
+  /* Underline that draws in from the left. */
   .link {
     background-image: linear-gradient(currentColor, currentColor);
     background-size: 0% 1px;
     background-position: 0 100%;
     background-repeat: no-repeat;
-    /* Keeps .press's transform in the list so press feedback still eases. */
     transition:
       transform var(--dur-press) var(--ease-out),
       background-size var(--dur-hover) var(--ease-out),
       color var(--dur-hover) var(--ease-out);
   }
-  .link:hover {
+  .link:hover,
+  .link:focus-visible {
     background-size: 100% 1px;
-    color: var(--color-lake);
-  }
-
-  /* Sub-section headings: plain sans, quieter than the section headline. */
-  .subhead {
-    font-size: 0.9375rem;
-    font-weight: 500;
-    color: var(--color-pencil);
   }
 
   .eyebrow {
     font-family: var(--font-mono);
-    font-size: 0.8125rem;
-    color: var(--color-pencil);
+    font-size: 0.75rem;
+    letter-spacing: 0.02em;
+    color: var(--color-muted);
+  }
+  .night .eyebrow {
+    color: var(--color-night-muted);
   }
 
-  /* Architecture diagrams (static on case studies, animated on the landing page).
-     State colours change instantly: SVG paint transitions run on the main thread,
-     and the edge-draw animation already marks each stage change. */
+  .serif {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+
+  /* Browser chrome around website screenshots. */
+  .browser {
+    border-radius: var(--radius-media);
+    border: 1px solid var(--color-line);
+    background: var(--color-paper-3);
+    overflow: hidden;
+  }
+  .browser-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: 32px;
+    padding-inline: 12px;
+    border-bottom: 1px solid var(--color-line);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-muted);
+  }
+  .browser-bar::before {
+    content: "";
+    width: 34px;
+    height: 8px;
+    background: radial-gradient(circle at 4px 4px, var(--color-line-strong) 3.5px, transparent 4px) 0 0 / 13px 8px repeat-x;
+  }
+
+  /* Architecture diagrams (static on case studies, animated on the landing
+     page). State colours change instantly: SVG paint transitions run on the
+     main thread, and the edge-draw animation already marks each change. */
   .dg-node rect {
-    fill: var(--color-carbon);
-    stroke: var(--color-seam-strong);
+    fill: var(--color-night-2);
+    stroke: var(--color-night-line);
     stroke-width: 1;
   }
   .dg-label {
@@ -152,60 +267,110 @@
     font-size: 15px;
     font-weight: 500;
     letter-spacing: -0.01em;
-    fill: var(--color-paper);
+    fill: var(--color-night-text);
   }
   .dg-sub {
     font-family: var(--font-mono);
     font-size: 11.5px;
-    fill: var(--color-pencil);
+    fill: var(--color-night-muted);
   }
   .dg-node[data-state="active"] rect {
-    stroke: var(--color-lake);
+    stroke: var(--color-night-accent);
   }
   .dg-node[data-state="active"] .dg-sub {
-    fill: var(--color-lake);
+    fill: var(--color-night-accent);
   }
   .dg-node[data-state="idle"] rect {
-    stroke: var(--color-seam);
+    stroke: var(--color-night-line);
+    fill: var(--color-night);
   }
   .dg-node[data-state="idle"] .dg-label,
   .dg-node[data-state="idle"] .dg-sub {
-    fill: var(--color-pencil);
+    fill: var(--color-night-muted);
   }
   .dg-node[data-state="idle"] .dg-sub {
-    opacity: 0.75;
+    opacity: 0.7;
   }
-
   .dg-group rect {
     fill: none;
-    stroke: var(--color-seam-strong);
+    stroke: var(--color-night-line);
     stroke-dasharray: 4 5;
   }
   .dg-group text {
     font-family: var(--font-mono);
     font-size: 11.5px;
-    fill: var(--color-pencil);
+    fill: var(--color-night-muted);
   }
   .dg-group[data-state="active"] rect {
-    stroke: var(--color-lake);
+    stroke: var(--color-night-accent);
   }
   .dg-group[data-state="active"] text {
-    fill: var(--color-lake);
+    fill: var(--color-night-accent);
   }
-
   .dg-edge path {
     fill: none;
-    stroke: var(--color-pencil);
+    stroke: var(--color-night-muted);
     stroke-width: 1.5;
     stroke-linecap: round;
     stroke-linejoin: round;
   }
   .dg-edge[data-state="active"] path {
-    stroke: var(--color-lake);
+    stroke: var(--color-night-accent);
   }
   .dg-edge[data-state="idle"] path {
-    stroke: var(--color-seam-strong);
+    stroke: var(--color-night-line);
   }
+  .dg-line {
+    stroke-dasharray: 1;
+  }
+  [data-draw] .dg-line {
+    animation: dg-draw 550ms var(--ease-out) both;
+  }
+  [data-draw] .dg-head {
+    animation: dg-head 200ms var(--ease-out) 450ms both;
+  }
+}
+
+@keyframes dg-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+@keyframes dg-head {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Project → case-study: the title or screenshot morphs into the next page's hero
+   (named <ViewTransition share="morph">). Short and direct, never a blank state;
+   the rest of the page crossfades and the header holds still. */
+::view-transition-group(.morph) {
+  z-index: 50;
+  animation-duration: 460ms;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+::view-transition-image-pair(.morph) {
+  animation-name: via-blur;
+}
+@keyframes via-blur {
+  30% {
+    filter: blur(3px);
+  }
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 240ms;
+}
+::view-transition-group(site-header) {
+  z-index: 100;
+  animation: none;
+}
+::view-transition-old(site-header) {
+  display: none;
+}
+::view-transition-new(site-header) {
+  animation: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -216,19 +381,22 @@
     animation-duration: 1ms !important;
     animation-iteration-count: 1 !important;
   }
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
   .press:active {
     transform: none;
   }
 }
 
-/* Print (used by the resume's "Print or save as PDF"): black on white, no
-   site chrome. Tailwind's default colours are removed, so this is plain CSS. */
+/* Print (the resume's "Print or save as PDF"): black on white, no chrome. */
 @media print {
   @page {
     margin: 14mm 16mm;
   }
   html {
-    /* rem-based type scales down to a document size */
     font-size: 11.5px !important;
   }
   html,
@@ -236,25 +404,18 @@
     background: #fff !important;
     color: #000 !important;
   }
-  body > header,
-  body > footer {
+  [data-site-header],
+  [data-site-footer] {
     display: none !important;
   }
-  .text-paper,
-  .text-pencil,
-  .eyebrow,
-  .subhead {
-    color: #000 !important;
-  }
-  .text-pencil {
+  .text-ink-2,
+  .text-muted,
+  .eyebrow {
     color: #333 !important;
   }
-  .border-seam,
-  .border-seam-strong {
+  .border-line,
+  .border-line-strong {
     border-color: #ccc !important;
-  }
-  .bg-seam-strong {
-    background: #999 !important;
   }
   a {
     color: inherit !important;

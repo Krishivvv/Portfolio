@@ -8,8 +8,8 @@ import { INTRO_KEY, INTRO_MS } from "./constants";
 export const introScript = `(function () {
   var d = document.documentElement, KEY = ${JSON.stringify(INTRO_KEY)}, ended = true, timer = 0;
   var scrollKeys = { ArrowDown: 1, ArrowUp: 1, PageDown: 1, PageUp: 1, Home: 1, End: 1, " ": 1 };
-  function remember() { try { localStorage.setItem(KEY, "1"); } catch (e) {} }
-  function seen() { try { return localStorage.getItem(KEY) === "1"; } catch (e) { return false; } }
+  function remember() { try { localStorage.setItem(KEY, "true"); } catch (e) {} }
+  function seen() { try { return localStorage.getItem(KEY) === "true"; } catch (e) { return false; } }
   function reduced() { return !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches); }
   function listen(on) {
     var m = on ? "addEventListener" : "removeEventListener", p = { passive: true };

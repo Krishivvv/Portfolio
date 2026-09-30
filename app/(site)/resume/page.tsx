@@ -24,16 +24,16 @@ const summary =
 
 function Block({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <section className="grid gap-4 border-t border-seam py-10 lg:grid-cols-12 lg:gap-8 print:grid-cols-[8rem_1fr] print:gap-6 print:py-4">
-      <h2 className="subhead lg:col-span-3">{title}</h2>
+    <section className="grid gap-4 border-t border-line py-10 lg:grid-cols-12 lg:gap-8 print:grid-cols-[8rem_1fr] print:gap-6 print:py-4">
+      <h2 className="eyebrow lg:col-span-3">{title}</h2>
       <div className="lg:col-span-9">{children}</div>
     </section>
   );
 }
 
-const bullet = "relative pl-5 text-pencil";
+const bullet = "relative pl-5 text-ink-2";
 const dash = (
-  <span aria-hidden className="absolute top-[0.75em] left-0 h-px w-2.5 bg-seam-strong" />
+  <span aria-hidden className="absolute top-[0.75em] left-0 h-px w-2.5 bg-line-strong" />
 );
 
 export default function ResumePage() {
@@ -42,13 +42,13 @@ export default function ResumePage() {
       <header className="flex flex-wrap items-end justify-between gap-6 pb-10 print:pb-4">
         <div>
           <h1 className="text-5xl font-semibold tracking-[-0.04em] sm:text-6xl print:text-4xl">{profile.name}</h1>
-          <p className="mt-3 text-pencil">
+          <p className="mt-3 text-ink-2">
             {profile.location} ·{" "}
-            <a href={mailto} className="press link">
+            <a href={mailto} className="press link inline-flex min-h-6 items-center">
               {profile.email}
             </a>{" "}
             ·{" "}
-            <a href={profile.github.url} className="press link">
+            <a href={profile.github.url} className="press link inline-flex min-h-6 items-center">
               github.com/{profile.github.handle}
             </a>
           </p>
@@ -65,7 +65,7 @@ export default function ResumePage() {
           {resumeSkills.map((s) => (
             <div key={s.label} className="grid gap-1 sm:grid-cols-[11rem_1fr]">
               <dt className="font-medium">{s.label}</dt>
-              <dd className="text-pencil">{s.items}</dd>
+              <dd className="text-ink-2">{s.items}</dd>
             </div>
           ))}
         </dl>
@@ -86,7 +86,7 @@ export default function ResumePage() {
                   </li>
                 ))}
               </ul>
-              <p className="mt-3 font-mono text-[0.8125rem] text-pencil">Tech: {p.stack.join(", ")}</p>
+              <p className="mt-3 font-mono text-[0.8125rem] text-ink-2">Tech: {p.stack.join(", ")}</p>
             </article>
           ))}
         </div>
@@ -99,7 +99,7 @@ export default function ResumePage() {
               <h3 className="text-xl font-medium tracking-[-0.01em]">
                 {job.role}, {job.org} · {job.place}
               </h3>
-              {job.period && <p className="font-mono text-[0.8125rem] text-pencil">{job.period}</p>}
+              {job.period && <p className="font-mono text-[0.8125rem] text-ink-2">{job.period}</p>}
               <ul className="mt-3 space-y-2">
                 {job.points.map((point) => (
                   <li key={point} className={bullet}>
@@ -119,9 +119,9 @@ export default function ResumePage() {
             <li key={e.school} className="flex flex-wrap justify-between gap-x-6">
               <span>
                 <span className="font-medium">{e.degree}</span>
-                <span className="text-pencil"> · {e.school}</span>
+                <span className="text-ink-2"> · {e.school}</span>
               </span>
-              <span className="font-mono text-[0.8125rem] text-pencil">{e.period}</span>
+              <span className="font-mono text-[0.8125rem] text-ink-2">{e.period}</span>
             </li>
           ))}
         </ul>
@@ -132,13 +132,13 @@ export default function ResumePage() {
           {roles.map((r) => (
             <li key={r.url}>
               {r.role}, {r.org} ·{" "}
-              <a href={r.url} className="press link inline-flex min-h-6 items-center font-mono text-[0.8125rem] text-pencil">
+              <a href={r.url} className="press link inline-flex min-h-6 items-center font-mono text-[0.8125rem] text-ink-2">
                 {r.domain}
               </a>
             </li>
           ))}
         </ul>
-        <p className="mt-4 text-pencil">Websites and frontend projects:</p>
+        <p className="mt-4 text-ink-2">Websites and frontend projects:</p>
         <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1">
           {sites.map((s) => (
             <li key={s.url}>
