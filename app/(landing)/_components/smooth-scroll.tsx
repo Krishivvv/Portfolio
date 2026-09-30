@@ -61,6 +61,12 @@ export function SmoothScroll() {
       document.removeEventListener("click", onClick, true);
       lenis?.destroy();
       active = undefined;
+      // Lenis 1.3's destroy() leaves its 400 ms native-scroll timer running; when
+      // it fires it puts the "lenis" class back on <html> on the next page. Clear
+      // the classes once it has passed, unless a new instance has started.
+      window.setTimeout(() => {
+        if (!active) document.documentElement.classList.remove("lenis", "lenis-smooth", "lenis-scrolling", "lenis-stopped", "lenis-locked");
+      }, 450);
     };
   }, []);
 
