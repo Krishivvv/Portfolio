@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { Portrait } from "@/components/portrait";
+import { lifeSummary } from "@/content/life";
 import { profile } from "@/content/profile";
 
 // R:7, in first person. Serif words mark the two halves of the work.
@@ -39,7 +40,7 @@ export function About() {
           <Portrait sizes="(min-width: 1024px) 360px, 80vw" className="sd-unveil w-full max-w-[340px] lg:col-span-4 lg:justify-self-end" />
         </div>
 
-        <div className="mt-16 grid gap-8 border-t border-line pt-8 sm:grid-cols-3">
+        <div className="mt-16 grid gap-8 border-t border-line pt-8 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <h3 className="eyebrow">Studying</h3>
             <p className="mt-2">
@@ -50,7 +51,15 @@ export function About() {
             <h3 className="eyebrow">Next</h3>
             <p className="mt-2">Building agentic and LLM-backed features on a real product team.</p>
           </div>
-          <div className="sm:text-right">
+          <div>
+            <h3 className="eyebrow">Outside work</h3>
+            <p className="mt-2">
+              <Link href="/about#life" className="press link inline-flex min-h-6 items-center">
+                {lifeSummary}
+              </Link>
+            </p>
+          </div>
+          <div className="lg:text-right">
             <Link href="/about" className="group btn btn-ghost press">
               More about me <span aria-hidden className="nudge">→</span>
             </Link>

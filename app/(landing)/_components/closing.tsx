@@ -34,7 +34,7 @@ export function Closing() {
           ref={ref}
           href={mailto}
           style={rich ? { scale, x } : undefined}
-          className="mt-14 block origin-left text-[clamp(1.5rem,6.2vw,5.75rem)] leading-none font-semibold tracking-[-0.045em] break-all decoration-2 underline-offset-[0.14em] hover:underline sm:break-normal"
+          className="mt-13 block origin-left py-1 text-[clamp(1.5rem,6.2vw,5.75rem)] leading-none font-semibold tracking-[-0.045em] break-all decoration-2 underline-offset-[0.14em] hover:underline sm:break-normal"
         >
           {profile.email}
         </m.a>

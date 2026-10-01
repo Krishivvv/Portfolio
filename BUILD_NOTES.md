@@ -147,6 +147,7 @@ Verification tools only (not in the project): Playwright, axe-core, Lighthouse.
 - Photo space: `components/portrait.tsx` on `/about` and the landing About; shows a monogram until `assets/photo.jpg` exists (then sized by `scripts/optimize-images.mjs`).
 - "Bolder motion": items 12–17 in §5. All respect reduced motion; scroll-driven ones fall back to the finished state where unsupported.
 - `Krishiv_Resume (2).pdf` is not committed (it includes the phone number; the site never shows it).
+- Life outside work (Krishiv, 2026-10-01, in conversation): national-level basketball player who has represented Jagran Lakecity University at West Zone three times; ramp model who has collaborated with companies on modelling work and represented the university at modelling events; district-level badminton and swimming (kept as a one-line "Also", which reads well under the two main items). `content/life.ts`; shown as a night section on `/about` (#life) and an "Outside work" line on the landing About. Media slots wait for `assets/life/` files (basketball photos; a modelling photo and clip) — without them each activity shows its name as an outlined word.
 
 ## Progress
 - [x] Audit, research (21st.dev, Figma Community, references), content model

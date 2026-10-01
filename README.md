@@ -22,6 +22,7 @@ Requires Node 20.9+.
 - `app/(site)/` — functional pages (`/work/[slug]`, `/resume`): native scrolling, no presentation motion.
 - `components/` — shared UI (header, footer, command palette, copy-email, static diagrams).
 - `assets/sites/` — screenshots of the websites.
+- `assets/life/` — photos and a clip for "Life outside work" on `/about` (naming in `assets/life/README.md`).
 - `assets/photo.jpg` — add your portrait here (portrait orientation, at least 1200 px tall) and rebuild; the photo frames on `/about` and the home page pick it up automatically.
 
 To add a demo or repo link to a project, fill `links` in `content/projects.ts`. To show internship dates, set `period` in `content/experience.ts`.

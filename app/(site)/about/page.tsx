@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
+import { LifeOutsideWork } from "@/components/life-outside-work";
 import { PageHeader } from "@/components/page-header";
 import { Portrait } from "@/components/portrait";
 import { otherWork } from "@/content/experience";
@@ -121,6 +122,8 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      <LifeOutsideWork />
 
       <section aria-labelledby="skills" className="mx-auto max-w-[1320px] px-4 py-20 sm:px-8 sm:py-28">
         <h2 id="skills" className="text-[clamp(2.25rem,5vw,4rem)] leading-none font-semibold tracking-[-0.045em]">

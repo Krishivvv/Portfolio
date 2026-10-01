@@ -28,3 +28,21 @@ for (const file of fs.readdirSync("assets/sites").filter((f) => /\.(jpe?g|png)$/
 // public/sites/photo-<width>.webp, which components/portrait.tsx picks up.
 const photo = fs.readdirSync("assets").find((f) => /^photo\.(jpe?g|png)$/i.test(f));
 if (photo) await sizes(path.join("assets", photo), "photo");
+
+// "Life outside work" media (components/life-outside-work.tsx): photos in
+// assets/life/ become public/sites/life-<name>-<width>.webp; videos are copied
+// to public/life/. Cloudflare Pages refuses files over 25 MiB, so a larger
+// video stops the build with a message instead of failing the deploy later.
+if (fs.existsSync("assets/life")) {
+  for (const file of fs.readdirSync("assets/life")) {
+    const full = path.join("assets/life", file);
+    if (/\.(jpe?g|png)$/i.test(file)) await sizes(full, `life-${path.parse(file).name}`);
+    if (/\.(mp4|webm)$/i.test(file)) {
+      const mib = fs.statSync(full).size / 1024 / 1024;
+      if (mib > 25) throw new Error(`${full} is ${mib.toFixed(1)} MiB; Cloudflare Pages allows 25 MiB per file. Compress it first.`);
+      fs.mkdirSync("public/life", { recursive: true });
+      const target = path.join("public/life", file);
+      if (!fs.existsSync(target) || fs.statSync(target).mtimeMs < fs.statSync(full).mtimeMs) fs.copyFileSync(full, target);
+    }
+  }
+}
