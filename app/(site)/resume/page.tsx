@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import { internships, otherWork } from "@/content/experience";
-import { mailto, profile } from "@/content/profile";
+import { linkedin, mailto, profile } from "@/content/profile";
 import { projects } from "@/content/projects";
 import { sites } from "@/content/sites";
 import { resumeSkills } from "@/content/skills";
@@ -52,6 +52,15 @@ export default function ResumePage() {
             <a href={profile.github.url} className="press link inline-flex min-h-6 items-center">
               github.com/{profile.github.handle}
             </a>
+            {linkedin && (
+              <>
+                {" "}
+                ·{" "}
+                <a href={linkedin.url} className="press link inline-flex min-h-6 items-center">
+                  {linkedin.display}
+                </a>
+              </>
+            )}
           </p>
         </div>
         <PrintButton />

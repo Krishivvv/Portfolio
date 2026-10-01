@@ -19,4 +19,11 @@ export const profile = {
   ],
 } as const;
 
-export const mailto = `mailto:${profile.email}`;
+// LinkedIn: Krishiv is sending the profile URL (2026-10-01). Set it here and a
+// LinkedIn link appears everywhere GitHub does (footer, contact, resume, menu,
+// command palette, structured data).
+const linkedinUrl = null as string | null;
+export const linkedin = linkedinUrl ? { url: linkedinUrl, display: linkedinUrl.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "") } : null;
+
+// Every "email me" link opens a new message with the subject filled in.
+export const mailto = `mailto:${profile.email}?subject=${encodeURIComponent("Hello Krishiv")}`;

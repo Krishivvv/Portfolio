@@ -26,5 +26,9 @@ export const activities: Activity[] = [
 
 export const alsoPlays = "District-level badminton player and swimmer.";
 
-// One line for places that only have room for a summary.
-export const lifeSummary = "National-level basketball and ramp modelling.";
+// Descriptions of the media in assets/life/, by file name (without extension).
+export const mediaAlt: Record<string, string> = {
+  "basketball-1": "Krishiv with the Jagran Lakecity University basketball team, in black-and-red kit, on an outdoor court.",
+  "basketball-2": "Krishiv with his basketball team, in blue kit, lined up under the hoop at a tournament.",
+  modelling: "Krishiv on the ramp at a fashion show.",
+};

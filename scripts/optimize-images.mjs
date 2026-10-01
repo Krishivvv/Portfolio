@@ -16,7 +16,8 @@ async function sizes(file, name) {
   for (const width of WIDTHS) {
     const target = path.join(out, `${name}-${width}.webp`);
     if (fs.existsSync(target) && fs.statSync(target).mtimeMs > fs.statSync(file).mtimeMs) continue;
-    await sharp(file).resize({ width, withoutEnlargement: true }).webp({ quality: 78 }).toFile(target);
+    // rotate() applies the camera's EXIF orientation, so phone photos stand upright.
+    await sharp(file).rotate().resize({ width, withoutEnlargement: true }).webp({ quality: 78 }).toFile(target);
   }
 }
 
@@ -34,9 +35,16 @@ if (photo) await sizes(path.join("assets", photo), "photo");
 // to public/life/. Cloudflare Pages refuses files over 25 MiB, so a larger
 // video stops the build with a message instead of failing the deploy later.
 if (fs.existsSync("assets/life")) {
+  // Upright pixel sizes of each photo, so the page can frame it at its own shape.
+  const dims = {};
   for (const file of fs.readdirSync("assets/life")) {
     const full = path.join("assets/life", file);
-    if (/\.(jpe?g|png)$/i.test(file)) await sizes(full, `life-${path.parse(file).name}`);
+    if (/\.(jpe?g|png)$/i.test(file)) {
+      await sizes(full, `life-${path.parse(file).name}`);
+      const meta = await sharp(full).metadata();
+      const turned = (meta.orientation ?? 1) >= 5;
+      dims[path.parse(file).name] = turned ? [meta.height, meta.width] : [meta.width, meta.height];
+    }
     if (/\.(mp4|webm)$/i.test(file)) {
       const mib = fs.statSync(full).size / 1024 / 1024;
       if (mib > 25) throw new Error(`${full} is ${mib.toFixed(1)} MiB; Cloudflare Pages allows 25 MiB per file. Compress it first.`);
@@ -45,4 +53,5 @@ if (fs.existsSync("assets/life")) {
       if (!fs.existsSync(target) || fs.statSync(target).mtimeMs < fs.statSync(full).mtimeMs) fs.copyFileSync(full, target);
     }
   }
+  fs.writeFileSync("public/sites/life-media.json", `${JSON.stringify(dims, null, 2)}\n`);
 }

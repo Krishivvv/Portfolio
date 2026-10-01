@@ -96,13 +96,7 @@ export function Hero() {
             <span>
               B.Tech CSE · Jagran Lakecity University<span className="max-sm:hidden"> · expected 2027</span>
             </span>
-            {/* Not just tech: a quiet pointer to "Life outside work" on /about. */}
-            <Link href="/about#life" className="press link inline-flex min-h-6 items-center text-ink-2 max-sm:order-last">
-              <span className="sm:hidden">Also: national-level basketball · ramp model</span>
-              <span className="max-sm:hidden">Beyond code: national-level basketball · ramp model</span>
-            </Link>
-            {/* Hidden where three items would wrap the row (phones, and 1024–1279 px, where the hero must fit one screen). */}
-            <span className="max-sm:hidden lg:max-xl:hidden">{profile.location}</span>
+            <span>{profile.location}</span>
           </p>
 
           <div className="relative mt-6 flex flex-1 flex-col justify-center lg:mt-0">

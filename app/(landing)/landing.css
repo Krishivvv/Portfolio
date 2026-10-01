@@ -31,7 +31,7 @@ html[data-intro="play"] .skip-intro {
 #capabilities { --chapter-h: 1200px; }
 #experience { --chapter-h: 1550px; }
 #engineering { --chapter-h: 1480px; }
-#about { --chapter-h: 1180px; }
+#about { --chapter-h: 1450px; }
 #contact { --chapter-h: 540px; }
 @media (min-width: 640px) {
   #work { --chapter-h: 1090px; }
@@ -39,7 +39,7 @@ html[data-intro="play"] .skip-intro {
   #capabilities { --chapter-h: 956px; }
   #experience { --chapter-h: 1380px; }
   #engineering { --chapter-h: 1640px; }
-  #about { --chapter-h: 980px; }
+  #about { --chapter-h: 1365px; }
   #contact { --chapter-h: 570px; }
 }
 @media (min-width: 1024px) {
@@ -49,7 +49,7 @@ html[data-intro="play"] .skip-intro {
   #experience { --chapter-h: 1065px; }
   /* The pinned stage is 250vh of scroll plus the heading. */
   #engineering { --chapter-h: calc(250vh + 663px); }
-  #about { --chapter-h: min(840px, calc(613px + (100vw - 1024px) * 0.45)); }
+  #about { --chapter-h: min(1180px, calc(893px + (100vw - 1024px) * 0.65)); }
   #contact { --chapter-h: calc(33vw + 320px); }
 }
 

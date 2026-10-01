@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { mailto, profile } from "@/content/profile";
+import { linkedin, mailto, profile } from "@/content/profile";
 
 import { navItems } from "./nav-items";
 
@@ -55,6 +55,13 @@ export function SiteFooter({ extra, curtain = false }: { extra?: React.ReactNode
                   GitHub ↗<span className="sr-only"> (opens in a new tab)</span>
                 </a>
               </li>
+              {linkedin && (
+                <li>
+                  <a href={linkedin.url} target="_blank" rel="noopener noreferrer" className={`${linkClass} hover:text-night-text`}>
+                    LinkedIn ↗<span className="sr-only"> (opens in a new tab)</span>
+                  </a>
+                </li>
+              )}
             </ul>
           </div>
           <div className="sm:text-right">

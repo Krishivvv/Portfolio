@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { profile } from "@/content/profile";
+import { linkedin, profile } from "@/content/profile";
 import { skills } from "@/content/skills";
 import { openGraph, siteUrl } from "@/lib/site";
 
@@ -25,7 +25,7 @@ const person = {
   name: profile.name,
   url: siteUrl,
   email: `mailto:${profile.email}`,
-  sameAs: [profile.github.url],
+  sameAs: [profile.github.url, ...(linkedin ? [linkedin.url] : [])],
   address: { "@type": "PostalAddress", addressLocality: "Bhopal", addressCountry: "IN" },
   knowsAbout: [...skills.genai.slice(0, 4), "PyTorch", "FastAPI", "React"],
 };

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
 
-import { mailto, profile } from "@/content/profile";
+import { linkedin, mailto, profile } from "@/content/profile";
 import { ease } from "@/lib/motion";
 
 import { isCurrent, navItems } from "../nav-items";
@@ -82,17 +82,32 @@ export function Menu() {
                         exit={{ y: "105%", transition: { duration: 0.25, ease } }}
                         transition={{ duration: 0.7, ease, delay: 0.12 + i * 0.05 }}
                       >
-                        <Link
-                          href={item.href}
-                          aria-current={(item.href === "/" ? pathname === "/" : isCurrent(pathname, item.href)) ? "page" : undefined}
-                          onClick={() => setOpen(false)}
-                          className="group press flex min-h-16 items-center justify-between py-3 text-[clamp(2.25rem,11vw,4.5rem)] leading-none font-semibold tracking-[-0.045em] aria-[current=page]:text-accent"
-                        >
-                          {item.label}
-                          <span aria-hidden className="nudge text-2xl text-muted">
-                            →
-                          </span>
-                        </Link>
+                        {"opensMail" in item && item.opensMail ? (
+                          // Straight to a new email; the /contact page stays in the footer.
+                          <a
+                            href={mailto}
+                            onClick={() => setOpen(false)}
+                            className="group press flex min-h-16 items-center justify-between py-3 text-[clamp(2.25rem,11vw,4.5rem)] leading-none font-semibold tracking-[-0.045em]"
+                          >
+                            {item.label}
+                            <span className="sr-only"> (opens your email app)</span>
+                            <span aria-hidden className="nudge nudge-up text-2xl text-muted">
+                              ↗
+                            </span>
+                          </a>
+                        ) : (
+                          <Link
+                            href={item.href}
+                            aria-current={(item.href === "/" ? pathname === "/" : isCurrent(pathname, item.href)) ? "page" : undefined}
+                            onClick={() => setOpen(false)}
+                            className="group press flex min-h-16 items-center justify-between py-3 text-[clamp(2.25rem,11vw,4.5rem)] leading-none font-semibold tracking-[-0.045em] aria-[current=page]:text-accent"
+                          >
+                            {item.label}
+                            <span aria-hidden className="nudge text-2xl text-muted">
+                              →
+                            </span>
+                          </Link>
+                        )}
                       </m.div>
                     </li>
                   ))}
@@ -111,6 +126,11 @@ export function Menu() {
                 <a href={profile.github.url} target="_blank" rel="noopener noreferrer" className="press link inline-flex min-h-11 items-center">
                   GitHub<span className="sr-only"> (opens in a new tab)</span> ↗
                 </a>
+                {linkedin && (
+                  <a href={linkedin.url} target="_blank" rel="noopener noreferrer" className="press link inline-flex min-h-11 items-center">
+                    LinkedIn<span className="sr-only"> (opens in a new tab)</span> ↗
+                  </a>
+                )}
               </m.div>
             </m.div>
           )}

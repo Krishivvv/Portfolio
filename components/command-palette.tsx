@@ -5,7 +5,7 @@ import { CornerDownLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
 
-import { profile } from "@/content/profile";
+import { linkedin, mailto, profile } from "@/content/profile";
 import { work } from "@/content/work";
 
 import { copyText } from "./copy-text";
@@ -106,7 +106,7 @@ export default function CommandPalette({ open, onOpenChange }: Props) {
               value="Write an email to Krishiv"
               onSelect={() => {
                 onOpenChange(false);
-                window.location.href = `mailto:${profile.email}`;
+                window.location.href = mailto;
               }}
               className={itemClass}
             >
@@ -122,6 +122,18 @@ export default function CommandPalette({ open, onOpenChange }: Props) {
             >
               GitHub <span className="text-muted">↗</span>
             </Command.Item>
+            {linkedin && (
+              <Command.Item
+                value="LinkedIn"
+                onSelect={() => {
+                  onOpenChange(false);
+                  if (linkedin) window.open(linkedin.url, "_blank", "noopener,noreferrer");
+                }}
+                className={itemClass}
+              >
+                LinkedIn <span className="text-muted">↗</span>
+              </Command.Item>
+            )}
           </Command.Group>
         </Command.List>
       </Command>

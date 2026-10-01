@@ -1,9 +1,13 @@
 # Life outside work — media
 
-Drop files here and rebuild; `components/life-outside-work.tsx` shows them on /about.
+Drop files here and rebuild. `lib/life-media.ts` picks them up for /about (#life) and the home page's About section.
 
-- `basketball-1.jpg`, `basketball-2.jpg`, … — West Zone / basketball photos
-- `modelling-1.jpg` — modelling photo (also used as the video's poster)
-- `modelling.mp4` — modelling clip (muted, loops while on screen; keep it under 25 MiB)
+- `basketball-1.jpeg`, `basketball-2.jpeg`, … — basketball photos (any shape; frames follow each photo's own aspect ratio)
+- `modelling.mp4` (or `modeling.mp4`) — a short clip: muted, loops while on screen, has a pause button; keep it under 25 MiB
+- `modelling-poster.jpg` — the clip's first look (else the first modelling photo)
+- `modelling-1.jpg`, … — modelling photos
 
-Up to three tiles show per activity. Without any files, the activity shows its name as a large outlined word.
+Descriptions for screen readers live in `content/life.ts` (`mediaAlt`). `source/` keeps originals and is not published.
+
+`modelling.mp4` is `source/modeling-original.mp4` turned upright (it was recorded on its side) and re-encoded for the web:
+`ffmpeg -i source/modeling-original.mp4 -vf transpose=2 -an -c:v libx264 -crf 22 -preset slow -pix_fmt yuv420p -movflags +faststart modelling.mp4`

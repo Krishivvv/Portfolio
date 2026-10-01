@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
+import { mailto } from "@/content/profile";
 import { spring } from "@/lib/motion";
 
 import { isCurrent, navItems } from "../nav-items";
@@ -35,6 +36,19 @@ export function NavLinks() {
         <ul className="relative flex items-center">
           {navItems.map((item) => {
             const current = isCurrent(pathname, item.href);
+            const linkClass =
+              "press relative inline-flex min-h-11 items-center rounded-full px-4 text-[0.9375rem] text-ink-2 hover:text-ink aria-[current=page]:text-ink";
+            if (item.opensMail) {
+              // Straight to a new email; the /contact page stays in the footer.
+              return (
+                <li key={item.href}>
+                  <a href={mailto} onMouseEnter={(e) => show(e.currentTarget)} onFocus={(e) => show(e.currentTarget)} onBlur={hide} className={linkClass}>
+                    {item.label}
+                    <span className="sr-only"> (opens your email app)</span>
+                  </a>
+                </li>
+              );
+            }
             return (
               <li key={item.href}>
                 <Link
@@ -43,7 +57,7 @@ export function NavLinks() {
                   onMouseEnter={(e) => show(e.currentTarget)}
                   onFocus={(e) => show(e.currentTarget)}
                   onBlur={hide}
-                  className="press relative inline-flex min-h-11 items-center rounded-full px-4 text-[0.9375rem] text-ink-2 hover:text-ink aria-[current=page]:text-ink"
+                  className={linkClass}
                 >
                   {item.label}
                   {current && (

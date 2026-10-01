@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { CopyEmail } from "@/components/copy-email";
 import { PageHeader } from "@/components/page-header";
-import { mailto, profile } from "@/content/profile";
+import { linkedin, mailto, profile } from "@/content/profile";
 import { openGraph } from "@/lib/site";
 
 const description = `Email ${profile.email}, or find Krishiv Sharma on GitHub.`;
@@ -34,7 +34,7 @@ export default function ContactPage() {
           <CopyEmail email={profile.email} />
         </div>
 
-        <ul className="mt-20 grid gap-4 sm:grid-cols-3">
+        <ul className={`mt-20 grid gap-4 ${linkedin ? "sm:grid-cols-2 lg:grid-cols-4" : "sm:grid-cols-3"}`}>
           <li>
             <a
               href={profile.github.url}
@@ -53,6 +53,26 @@ export default function ContactPage() {
               <span className="sr-only">(opens in a new tab)</span>
             </a>
           </li>
+          {linkedin && (
+            <li>
+              <a
+                href={linkedin.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group press flex h-full flex-col gap-2 rounded-media border border-line bg-paper-3 p-6 transition-colors hover:border-ink"
+              >
+                <span className="eyebrow">Network</span>
+                <span className="text-2xl font-semibold tracking-[-0.03em]">LinkedIn</span>
+                <span className="mt-auto flex items-center justify-between gap-4 pt-6 font-mono text-[0.75rem] break-all text-muted">
+                  {linkedin.display}
+                  <span aria-hidden className="nudge nudge-up text-accent">
+                    ↗
+                  </span>
+                </span>
+                <span className="sr-only">(opens in a new tab)</span>
+              </a>
+            </li>
+          )}
           <li>
             <Link
               href="/resume"

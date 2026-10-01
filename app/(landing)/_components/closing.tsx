@@ -8,7 +8,7 @@ import { CopyEmail } from "@/components/copy-email";
 import { Marquee } from "@/components/motion/marquee";
 import { Reveal, SplitWords } from "@/components/motion/reveal";
 import { RICH_MOTION, useMedia } from "@/components/motion/use-media";
-import { mailto, profile } from "@/content/profile";
+import { linkedin, mailto, profile } from "@/content/profile";
 
 // The closing chapter: the address grows into place as it arrives, then the
 // page lifts away to reveal the footer underneath (see SiteFooter "curtain").
@@ -41,13 +41,18 @@ export function Closing() {
 
         {/* Phones: a tidy two-by-two grid of equal buttons. */}
         <div className="mt-12 grid grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:items-center">
-          <a href={mailto} className="group btn btn-primary press">
+          <a href={mailto} className={`group btn btn-primary press ${linkedin ? "col-span-2 sm:col-auto" : ""}`}>
             Email me <span aria-hidden className="nudge">→</span>
           </a>
           <CopyEmail email={profile.email} />
           <a href={profile.github.url} target="_blank" rel="noopener noreferrer" className="btn btn-ghost press">
             GitHub ↗<span className="sr-only"> (opens in a new tab)</span>
           </a>
+          {linkedin && (
+            <a href={linkedin.url} target="_blank" rel="noopener noreferrer" className="btn btn-ghost press">
+              LinkedIn ↗<span className="sr-only"> (opens in a new tab)</span>
+            </a>
+          )}
           <Link href="/resume" className="btn btn-ghost press">
             Resume
           </Link>
