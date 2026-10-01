@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 
 // Absolute origin for canonical URLs, the sitemap, JSON-LD and link previews.
-// Production builds default to the Cloudflare Worker's address (the "portfolio"
-// Worker, deployed from GitHub by Workers Builds); set SITE_URL to override it,
-// for example once a custom domain is attached. Development uses localhost.
-const PRODUCTION_URL = "https://portfolio.sharmakrishiv1205.workers.dev";
+// Production builds default to the site's public address on Cloudflare Pages;
+// set SITE_URL to override it, for example once a custom domain is attached.
+// Development uses localhost.
+const PRODUCTION_URL = "https://krishiv-sharma.pages.dev";
 
 const origin =
   process.env.SITE_URL ??

@@ -14,6 +14,7 @@
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "404-page"
   },
-  // Public at portfolio.sharmakrishiv1205.workers.dev (the default SITE_URL in lib/site.ts).
+  // Mirror at portfolio.sharmakrishiv1205.workers.dev; the public address is
+  // krishiv-sharma.pages.dev (the default SITE_URL in lib/site.ts).
   "workers_dev": true
 }

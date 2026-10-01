@@ -28,6 +28,13 @@ To add a demo or repo link to a project, fill `links` in `content/projects.ts`. 
 
 ## Deploy
 
-Pushing to `main` deploys: Cloudflare Workers Builds is connected to this repository and deploys the `portfolio` Worker. `wrangler.jsonc` makes it a static-assets Worker that builds the site (`npm run build`) and serves `out/`. The live address is https://portfolio.sharmakrishiv1205.workers.dev.
+The site lives at **https://krishiv-sharma.pages.dev** (Cloudflare Pages project `krishiv-sharma`, a direct-upload project). To publish a new version:
 
-Canonical URLs, the sitemap and link previews use that address by default. After attaching a custom domain, set `SITE_URL` (for example `https://example.com`) in the Worker's build variables.
+```bash
+npm run build
+npx wrangler pages deploy out --project-name krishiv-sharma --branch main
+```
+
+Pushing to `main` also deploys a mirror through Cloudflare Workers Builds (the `portfolio` Worker, configured by `wrangler.jsonc`) at https://portfolio.sharmakrishiv1205.workers.dev.
+
+Canonical URLs, the sitemap and link previews use the Pages address by default. After attaching a custom domain, set `SITE_URL` (for example `https://example.com`) when building.
