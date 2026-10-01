@@ -7,6 +7,7 @@ import { useEffect, useId, useRef, useState } from "react";
 
 import { linkedin, mailto, profile } from "@/content/profile";
 import { ease } from "@/lib/motion";
+import { openEmail } from "../email-link";
 
 import { isCurrent, navItems } from "../nav-items";
 
@@ -86,7 +87,10 @@ export function Menu() {
                           // Straight to a new email; the /contact page stays in the footer.
                           <a
                             href={mailto}
-                            onClick={() => setOpen(false)}
+                            onClick={(e) => {
+                              setOpen(false);
+                              openEmail(e);
+                            }}
                             className="group press flex min-h-16 items-center justify-between py-3 text-[clamp(2.25rem,11vw,4.5rem)] leading-none font-semibold tracking-[-0.045em]"
                           >
                             {item.label}
@@ -120,7 +124,7 @@ export function Menu() {
                 exit={{ opacity: 0, transition: { duration: 0.15 } }}
                 className="flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-line px-4 py-5 text-sm sm:px-8"
               >
-                <a href={mailto} className="press link inline-flex min-h-11 items-center">
+                <a href={mailto} onClick={openEmail} className="press link inline-flex min-h-11 items-center">
                   {profile.email}
                 </a>
                 <a href={profile.github.url} target="_blank" rel="noopener noreferrer" className="press link inline-flex min-h-11 items-center">

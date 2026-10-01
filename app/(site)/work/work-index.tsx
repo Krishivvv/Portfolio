@@ -62,22 +62,44 @@ export function WorkIndex() {
                   transition={spring}
                   className="sm:col-span-2 lg:col-span-3"
                 >
-                  <Link href={`/work/${p.slug}`} className="group night grid overflow-hidden rounded-media lg:grid-cols-12">
+                  {/* The title is the card's link, stretched over the whole card; the demo
+                      and code links sit above it (links cannot nest). */}
+                  <div className="group night relative grid overflow-hidden rounded-media has-[[data-card-link]:focus-visible]:outline-2 has-[[data-card-link]:focus-visible]:outline-offset-4 has-[[data-card-link]:focus-visible]:outline-night-accent lg:grid-cols-12">
                     <span className="flex flex-col justify-between gap-8 p-6 sm:p-10 lg:col-span-7">
                       <span>
                         <span className="eyebrow">AI system</span>
                         <ViewTransition name={`work-title-${p.slug}`} share="morph" default="none">
-                          <span className="mt-3 block text-[clamp(2.75rem,6vw,5.5rem)] leading-[0.92] font-semibold tracking-[-0.05em]">
+                          <Link
+                            href={`/work/${p.slug}`}
+                            data-card-link
+                            className="mt-3 block text-[clamp(2.75rem,6vw,5.5rem)] leading-[0.92] font-semibold tracking-[-0.05em] outline-none after:absolute after:inset-0 after:content-['']"
+                          >
                             {p.name}
-                          </span>
+                          </Link>
                         </ViewTransition>
                         <span className="mt-2 block text-lg text-night-muted">{p.kind}</span>
                       </span>
                       <span className="max-w-[50ch] text-night-muted">{p.line}</span>
-                      <span className="flex flex-wrap items-center justify-between gap-4">
-                        <span className="font-mono text-[0.75rem] text-night-muted">{p.stack.join(" · ")}</span>
-                        <span className="inline-flex items-center gap-2 font-medium text-night-accent">
-                          Case study <span aria-hidden className="nudge">→</span>
+                      <span className="font-mono text-[0.75rem] text-night-muted">{p.stack.join(" · ")}</span>
+                      <span className="pointer-events-none relative z-10 flex flex-wrap items-center gap-x-6 gap-y-1">
+                        <a
+                          href={p.demo}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="pointer-events-auto press link inline-flex min-h-11 items-center gap-1.5 font-medium text-night-accent"
+                        >
+                          Live demo ↗<span className="sr-only">: {p.name} (opens in a new tab)</span>
+                        </a>
+                        <a
+                          href={p.repo}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="pointer-events-auto press link inline-flex min-h-11 items-center gap-1.5 text-night-muted hover:text-night-text"
+                        >
+                          Code ↗<span className="sr-only">: {p.name} on GitHub (opens in a new tab)</span>
+                        </a>
+                        <span aria-hidden className="ml-auto inline-flex items-center gap-2 font-medium text-night-text">
+                          Case study <span className="nudge">→</span>
                         </span>
                       </span>
                     </span>
@@ -88,7 +110,7 @@ export function WorkIndex() {
                         style={{ height: 340 }}
                       />
                     </span>
-                  </Link>
+                  </div>
                 </m.li>
               ))}
             {showWeb &&

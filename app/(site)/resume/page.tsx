@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 
+import { EmailLink } from "@/components/email-link";
 import { internships, otherWork } from "@/content/experience";
-import { linkedin, mailto, profile } from "@/content/profile";
+import { linkedin, profile } from "@/content/profile";
 import { projects } from "@/content/projects";
 import { sites } from "@/content/sites";
 import { resumeSkills } from "@/content/skills";
@@ -45,9 +46,7 @@ export default function ResumePage() {
           <h1 className="text-5xl font-semibold tracking-[-0.04em] sm:text-6xl print:text-4xl">{profile.name}</h1>
           <p className="mt-3 text-ink-2">
             {profile.location} ·{" "}
-            <a href={mailto} className="press link inline-flex min-h-6 items-center">
-              {profile.email}
-            </a>{" "}
+            <EmailLink className="press link inline-flex min-h-6 items-center">{profile.email}</EmailLink>{" "}
             ·{" "}
             <a href={profile.github.url} className="press link inline-flex min-h-6 items-center">
               github.com/{profile.github.handle}
@@ -96,7 +95,16 @@ export default function ResumePage() {
                   </li>
                 ))}
               </ul>
-              <p className="mt-3 font-mono text-[0.8125rem] text-ink-2">Tech: {p.stack.join(", ")}</p>
+              <p className="mt-3 font-mono text-[0.8125rem] text-ink-2">
+                Tech: {p.stack.join(", ")} ·{" "}
+                <a href={p.demo} className="press link inline-flex min-h-6 items-center">
+                  Live demo
+                </a>{" "}
+                ·{" "}
+                <a href={p.repo} className="press link inline-flex min-h-6 items-center">
+                  Code
+                </a>
+              </p>
             </article>
           ))}
         </div>

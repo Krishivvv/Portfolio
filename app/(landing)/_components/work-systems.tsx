@@ -44,7 +44,7 @@ export function WorkSystems() {
                   href={`/work/${p.slug}`}
                   onMouseEnter={() => setActive(p.slug)}
                   onFocus={() => setActive(p.slug)}
-                  className="group grid gap-3 py-8 sm:py-10"
+                  className="group grid gap-3 pt-8 pb-4 sm:pt-10 sm:pb-5"
                 >
                   <span className="flex items-baseline justify-between gap-6">
                     <ViewTransition name={`work-title-${p.slug}`} share="morph" default="none">
@@ -65,6 +65,31 @@ export function WorkSystems() {
                   </span>
                   <span className="max-w-[56ch] text-night-muted lg:hidden">{p.line}</span>
                 </Link>
+                {/* Each one is deployed: try it, or read the code. */}
+                <p className="flex flex-wrap gap-x-6 pb-6 font-mono text-[0.8125rem] sm:pb-8">
+                  <a
+                    href={p.demo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onMouseEnter={() => setActive(p.slug)}
+                    onFocus={() => setActive(p.slug)}
+                    className="group press link inline-flex min-h-11 items-center gap-1.5 text-night-accent"
+                  >
+                    Live demo <span aria-hidden className="nudge nudge-up">↗</span>
+                    <span className="sr-only">: {p.name} (opens in a new tab)</span>
+                  </a>
+                  <a
+                    href={p.repo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onMouseEnter={() => setActive(p.slug)}
+                    onFocus={() => setActive(p.slug)}
+                    className="group press link inline-flex min-h-11 items-center gap-1.5 text-night-muted hover:text-night-text"
+                  >
+                    Code <span aria-hidden className="nudge nudge-up">↗</span>
+                    <span className="sr-only">: {p.name} on GitHub (opens in a new tab)</span>
+                  </a>
+                </p>
               </li>
             ))}
           </ul>

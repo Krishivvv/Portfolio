@@ -7,6 +7,7 @@ import { useState } from "react";
 
 import { mailto } from "@/content/profile";
 import { spring } from "@/lib/motion";
+import { openEmail } from "../email-link";
 
 import { isCurrent, navItems } from "../nav-items";
 
@@ -42,7 +43,7 @@ export function NavLinks() {
               // Straight to a new email; the /contact page stays in the footer.
               return (
                 <li key={item.href}>
-                  <a href={mailto} onMouseEnter={(e) => show(e.currentTarget)} onFocus={(e) => show(e.currentTarget)} onBlur={hide} className={linkClass}>
+                  <a href={mailto} onClick={openEmail} onMouseEnter={(e) => show(e.currentTarget)} onFocus={(e) => show(e.currentTarget)} onBlur={hide} className={linkClass}>
                     {item.label}
                     <span className="sr-only"> (opens your email app)</span>
                   </a>

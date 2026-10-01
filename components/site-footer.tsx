@@ -1,7 +1,8 @@
 import Link from "next/link";
 
-import { linkedin, mailto, profile } from "@/content/profile";
+import { linkedin, profile } from "@/content/profile";
 
+import { EmailLink } from "./email-link";
 import { navItems } from "./nav-items";
 
 const linkClass = "press link inline-flex min-h-11 items-center";
@@ -46,9 +47,7 @@ export function SiteFooter({ extra, curtain = false }: { extra?: React.ReactNode
             <h2 className="eyebrow mb-3">Elsewhere</h2>
             <ul className="text-night-muted">
               <li>
-                <a href={mailto} className={`${linkClass} break-all hover:text-night-text`}>
-                  {profile.email}
-                </a>
+                <EmailLink className={`${linkClass} break-all hover:text-night-text`}>{profile.email}</EmailLink>
               </li>
               <li>
                 <a href={profile.github.url} target="_blank" rel="noopener noreferrer" className={`${linkClass} hover:text-night-text`}>

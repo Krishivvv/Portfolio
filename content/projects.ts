@@ -1,8 +1,8 @@
 // Krishiv_Resume.md, "Projects". `points` are the resume bullets verbatim (used
 // on /resume); `details` say the same things in the site's first person (used on
-// case studies) and add nothing. Demo and repo links are listed on the resume
-// but were not in the source file; `links` stays empty until they are supplied
-// (BUILD_NOTES.md, Q4).
+// case studies) and add nothing. Demo and repo links: each repository on
+// github.com/Krishivvv names its live deployment in its README (Krishiv,
+// 2026-10-01: "they're already deployed"); all checked live on 2026-10-01.
 
 export type Project = {
   slug: "voicedesk" | "shiksha" | "veridex";
@@ -14,6 +14,10 @@ export type Project = {
   points: string[];
   details: string[];
   stack: string[];
+  /** The deployed app, to try it. */
+  demo: string;
+  /** The source on GitHub. */
+  repo: string;
   links: { label: string; url: string }[];
 };
 
@@ -36,7 +40,12 @@ export const projects: Project[] = [
       "It is served through FastAPI, with a Streamlit UI that records live audio and displays the transcript.",
     ],
     stack: ["Python", "FastAPI", "LangChain", "LLaMA 3.3", "Whisper", "ChromaDB"],
-    links: [],
+    demo: "https://huggingface.co/spaces/krishivvv/voicedesk",
+    repo: "https://github.com/Krishivvv/VoiceDesk",
+    links: [
+      { label: "Live demo", url: "https://huggingface.co/spaces/krishivvv/voicedesk" },
+      { label: "Code", url: "https://github.com/Krishivvv/VoiceDesk" },
+    ],
   },
   {
     slug: "shiksha",
@@ -55,7 +64,12 @@ export const projects: Project[] = [
       "Headless Chromium (Pyppeteer) renders the animations, and FFmpeg merges audio and video. It is served through a React + Flask app.",
     ],
     stack: ["Python", "Flask", "React", "GPT-4o", "Gemini 1.5", "Groq", "FFmpeg"],
-    links: [],
+    demo: "https://krishivvv-shikshaai.hf.space",
+    repo: "https://github.com/Krishivvv/Shiksha",
+    links: [
+      { label: "Live demo", url: "https://krishivvv-shikshaai.hf.space" },
+      { label: "Code", url: "https://github.com/Krishivvv/Shiksha" },
+    ],
   },
   {
     slug: "veridex",
@@ -72,7 +86,12 @@ export const projects: Project[] = [
       "Early stopping and ReduceLROnPlateau learning-rate scheduling keep convergence stable. It was trained on a Colab GPU.",
     ],
     stack: ["Python", "PyTorch", "ResNet-50", "CNN"],
-    links: [],
+    demo: "https://frontend-ten-mu-27.vercel.app",
+    repo: "https://github.com/Krishivvv/Veridex",
+    links: [
+      { label: "Live demo", url: "https://frontend-ten-mu-27.vercel.app" },
+      { label: "Code", url: "https://github.com/Krishivvv/Veridex" },
+    ],
   },
 ];
 

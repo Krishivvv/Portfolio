@@ -5,7 +5,7 @@ import { CornerDownLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
 
-import { linkedin, mailto, profile } from "@/content/profile";
+import { gmailCompose, linkedin, mailto, profile } from "@/content/profile";
 import { work } from "@/content/work";
 
 import { copyText } from "./copy-text";
@@ -106,7 +106,9 @@ export default function CommandPalette({ open, onOpenChange }: Props) {
               value="Write an email to Krishiv"
               onSelect={() => {
                 onOpenChange(false);
-                window.location.href = mailto;
+                // Same rule as the email buttons: Gmail's compose window on desktops, the mail app elsewhere.
+                if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) window.open(gmailCompose, "_blank", "noopener,noreferrer");
+                else window.location.href = mailto;
               }}
               className={itemClass}
             >

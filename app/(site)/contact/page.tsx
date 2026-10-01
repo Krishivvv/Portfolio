@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { CopyEmail } from "@/components/copy-email";
+import { EmailLink } from "@/components/email-link";
 import { PageHeader } from "@/components/page-header";
-import { linkedin, mailto, profile } from "@/content/profile";
+import { linkedin, profile } from "@/content/profile";
 import { openGraph } from "@/lib/site";
 
 const description = `Email ${profile.email}, or find Krishiv Sharma on GitHub.`;
@@ -21,16 +22,13 @@ export default function ContactPage() {
       <PageHeader eyebrow="Contact" title="Email is the fastest" accent="way to reach me." />
 
       <section aria-label="Contact details" className="mx-auto max-w-[1320px] px-4 pb-24 sm:px-8 sm:pb-32">
-        <a
-          href={mailto}
-          className="press block text-[clamp(1.6rem,6vw,5.5rem)] leading-none font-semibold tracking-[-0.045em] break-all decoration-accent decoration-2 underline-offset-[0.14em] hover:text-accent hover:underline sm:break-normal"
-        >
+        <EmailLink className="press block text-[clamp(1.6rem,6vw,5.5rem)] leading-none font-semibold tracking-[-0.045em] break-all decoration-accent decoration-2 underline-offset-[0.14em] hover:text-accent hover:underline sm:break-normal">
           {profile.email}
-        </a>
+        </EmailLink>
         <div className="mt-10 flex flex-wrap items-center gap-3">
-          <a href={mailto} className="group btn btn-primary press">
+          <EmailLink className="group btn btn-primary press">
             Email me <span aria-hidden className="nudge">→</span>
-          </a>
+          </EmailLink>
           <CopyEmail email={profile.email} />
         </div>
 

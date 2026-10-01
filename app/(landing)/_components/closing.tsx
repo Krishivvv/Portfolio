@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRef } from "react";
 
 import { CopyEmail } from "@/components/copy-email";
+import { EmailLink, openEmail } from "@/components/email-link";
 import { Marquee } from "@/components/motion/marquee";
 import { Reveal, SplitWords } from "@/components/motion/reveal";
 import { RICH_MOTION, useMedia } from "@/components/motion/use-media";
@@ -33,6 +34,7 @@ export function Closing() {
         <m.a
           ref={ref}
           href={mailto}
+          onClick={openEmail}
           style={rich ? { scale, x } : undefined}
           className="mt-13 block origin-left py-1 text-[clamp(1.5rem,6.2vw,5.75rem)] leading-none font-semibold tracking-[-0.045em] break-all decoration-2 underline-offset-[0.14em] hover:underline sm:break-normal"
         >
@@ -41,9 +43,9 @@ export function Closing() {
 
         {/* Phones: a tidy two-by-two grid of equal buttons. */}
         <div className="mt-12 grid grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:items-center">
-          <a href={mailto} className={`group btn btn-primary press ${linkedin ? "col-span-2 sm:col-auto" : ""}`}>
+          <EmailLink className={`group btn btn-primary press ${linkedin ? "col-span-2 sm:col-auto" : ""}`}>
             Email me <span aria-hidden className="nudge">→</span>
-          </a>
+          </EmailLink>
           <CopyEmail email={profile.email} />
           <a href={profile.github.url} target="_blank" rel="noopener noreferrer" className="btn btn-ghost press">
             GitHub ↗<span className="sr-only"> (opens in a new tab)</span>

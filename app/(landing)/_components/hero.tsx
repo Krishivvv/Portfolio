@@ -5,7 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { RICH_MOTION, useMedia } from "@/components/motion/use-media";
-import { mailto, profile } from "@/content/profile";
+import { EmailLink } from "@/components/email-link";
+import { profile } from "@/content/profile";
 import { projects } from "@/content/projects";
 import { getSite } from "@/content/sites";
 
@@ -135,9 +136,7 @@ export function Hero() {
                 <Link href="#work" className="group btn btn-primary press col-span-2 justify-center sm:justify-start">
                   See the work <span aria-hidden className="nudge">→</span>
                 </Link>
-                <a href={mailto} className="btn btn-ghost press justify-center">
-                  Email me
-                </a>
+                <EmailLink className="btn btn-ghost press justify-center">Email me</EmailLink>
                 <Link href="/resume" className="btn btn-ghost press justify-center">
                   Resume
                 </Link>

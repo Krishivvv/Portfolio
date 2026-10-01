@@ -69,6 +69,17 @@ function CaseStudy({ project }: { project: Project }) {
         </ViewTransition>
         <p className="mt-6 text-2xl tracking-[-0.02em] text-ink-2 sm:text-3xl">{project.kind}</p>
         <p className="mt-8 max-w-[44ch] text-xl leading-snug sm:text-2xl">{project.overview}</p>
+        {/* It is deployed: let people try it. */}
+        <div className="mt-8 grid grid-cols-1 gap-3 sm:flex sm:flex-wrap">
+          <a href={project.demo} target="_blank" rel="noopener noreferrer" className="group btn btn-primary press">
+            Open the live demo <span aria-hidden className="nudge nudge-up">↗</span>
+            <span className="sr-only">(opens in a new tab)</span>
+          </a>
+          <a href={project.repo} target="_blank" rel="noopener noreferrer" className="group btn btn-ghost press">
+            Code on GitHub <span aria-hidden className="nudge nudge-up">↗</span>
+            <span className="sr-only">(opens in a new tab)</span>
+          </a>
+        </div>
         <Snapshot
           items={[
             ...(project.role ? [{ label: "Role", value: project.role }] : []),

@@ -26,4 +26,8 @@ const linkedinUrl = null as string | null;
 export const linkedin = linkedinUrl ? { url: linkedinUrl, display: linkedinUrl.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "") } : null;
 
 // Every "email me" link opens a new message with the subject filled in.
-export const mailto = `mailto:${profile.email}?subject=${encodeURIComponent("Hello Krishiv")}`;
+const subject = "Hello Krishiv";
+export const mailto = `mailto:${profile.email}?subject=${encodeURIComponent(subject)}`;
+// Gmail's compose window, for desktops where mailto: has no mail app behind it
+// (see components/email-link.tsx).
+export const gmailCompose = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(profile.email)}&su=${encodeURIComponent(subject)}`;
