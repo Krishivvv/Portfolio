@@ -81,20 +81,23 @@ export function Capabilities() {
               <div key={group.key} className={spans[group.key]}>
                 <h3 className="border-b border-line-strong pb-3 text-sm font-medium tracking-[-0.01em]">{group.label}</h3>
                 <ul className="mt-4 flex flex-wrap gap-x-4 gap-y-2">
-                  {skills[group.key].map((skill) => {
+                  {skills[group.key].map((skill, k) => {
                     const on = used ? used.has(skill) : true;
                     // Unused skills fall back to the muted colour (still 4.6:1); used
-                    // ones go to full ink with a vermilion underline and dot.
+                    // ones go to full ink with an ultramarine underline and dot.
                     return (
                       <li
                         key={skill}
                         data-state={used ? (on ? "used" : "unused") : undefined}
+                        // A filter change runs through each group as a quick cascade.
+                        style={{ transitionDelay: `${k * 28}ms` }}
                         className="group/skill relative text-[clamp(1.05rem,1.6vw,1.35rem)] tracking-[-0.015em] text-ink-2 transition-colors duration-300 data-[state=unused]:text-muted data-[state=used]:text-ink data-[state=used]:underline data-[state=used]:decoration-accent data-[state=used]:decoration-2 data-[state=used]:underline-offset-[0.3em]"
                       >
                         {skill}
                         <span
                           aria-hidden
-                          className="absolute -top-0.5 -right-2 size-1.5 scale-0 rounded-full bg-accent transition-transform duration-300 ease-[var(--ease-out)] group-data-[state=used]/skill:scale-100"
+                          style={{ transitionDelay: `${k * 28 + 120}ms` }}
+                          className="absolute -top-0.5 -right-2 size-1.5 scale-0 rounded-full bg-accent transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-data-[state=used]/skill:scale-150"
                         />
                       </li>
                     );

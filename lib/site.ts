@@ -1,29 +1,28 @@
 import type { Metadata } from "next";
 
 // Absolute origin for canonical URLs, the sitemap, JSON-LD and link previews.
-// On Vercel the production hostname is used automatically; anywhere else set
-// SITE_URL. A production build without either fails instead of shipping
-// localhost URLs.
+// Production builds default to the Cloudflare Worker's address (the "portfolio"
+// Worker, deployed from GitHub by Workers Builds); set SITE_URL to override it,
+// for example once a custom domain is attached. Development uses localhost.
+const PRODUCTION_URL = "https://portfolio.sharmakrishiv1205.workers.dev";
+
 const origin =
   process.env.SITE_URL ??
-  (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : undefined);
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : undefined) ??
+  (process.env.NODE_ENV === "production" ? PRODUCTION_URL : "http://localhost:3000");
 
-if (!origin && process.env.NODE_ENV === "production") {
-  throw new Error("Set SITE_URL (for example https://example.com) before building for production.");
-}
-
-export const siteUrl = (origin ?? "http://localhost:3000").replace(/\/$/, "");
+export const siteUrl = origin.replace(/\/$/, "");
 
 export const siteName = "Krishiv Sharma";
 
 export const siteDescription =
-  "Krishiv Sharma builds AI products and websites: an agentic voice-support system, an LLM video-generation pipeline, a deepfake classifier, and eight live websites.";
+  "Krishiv Sharma builds AI products and websites: an agentic voice-support system, an LLM video-generation pipeline, a deepfake classifier, and nine websites, seven of them live.";
 
 const ogImage = {
   url: "/og.png",
   width: 1200,
   height: 630,
-  alt: "Krishiv Sharma — I build AI products and websites. VoiceDesk, Shiksha, Veridex and eight live websites. Bhopal, India.",
+  alt: "Krishiv Sharma — I build AI products and websites. VoiceDesk, Shiksha, Veridex and nine websites. Bhopal, India.",
 };
 
 // Every page builds its Open Graph data here: a page-level `openGraph` object

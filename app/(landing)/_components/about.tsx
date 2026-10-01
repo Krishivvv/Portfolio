@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { Portrait } from "@/components/portrait";
 import { profile } from "@/content/profile";
 
 // R:7, in first person. Serif words mark the two halves of the work.
@@ -8,7 +9,7 @@ const statement: { text: string; serif?: boolean }[] = [
   { text: "AI products, not just notebooks", serif: true },
   { text: "— an agentic voice-support system, an LLM video pipeline and a deepfake classifier — and I build" },
   { text: "websites", serif: true },
-  { text: "for businesses: eight, all live." },
+  { text: "for businesses: seven live, two in progress." },
 ];
 
 const words = statement.flatMap((part) => part.text.split(" ").map((w) => ({ w, serif: !!part.serif })));
@@ -24,16 +25,19 @@ export function About() {
         <h2 id="about-title" className="eyebrow">
           About
         </h2>
-        <p
-          className="read-in mt-8 max-w-[24ch] text-[clamp(2rem,4.6vw,4.4rem)] leading-[1.04] font-medium tracking-[-0.035em] lg:max-w-[26ch]"
-          style={{ "--n": words.length } as React.CSSProperties}
-        >
-          {words.map((item, i) => (
-            <span key={i} className={item.serif ? "serif text-accent" : undefined} style={{ "--i": i } as React.CSSProperties}>
-              {item.w}{" "}
-            </span>
-          ))}
-        </p>
+        <div className="mt-8 grid items-end gap-12 lg:grid-cols-12">
+          <p
+            className="read-in text-[clamp(2rem,4.3vw,4.1rem)] leading-[1.04] font-medium tracking-[-0.035em] lg:col-span-8"
+            style={{ "--n": words.length } as React.CSSProperties}
+          >
+            {words.map((item, i) => (
+              <span key={i} className={item.serif ? "serif text-accent" : undefined} style={{ "--i": i } as React.CSSProperties}>
+                {item.w}{" "}
+              </span>
+            ))}
+          </p>
+          <Portrait sizes="(min-width: 1024px) 360px, 80vw" className="sd-unveil w-full max-w-[340px] lg:col-span-4 lg:justify-self-end" />
+        </div>
 
         <div className="mt-16 grid gap-8 border-t border-line pt-8 sm:grid-cols-3">
           <div>

@@ -26,7 +26,9 @@ export async function generateMetadata({ params }: PageProps<"/work/[slug]">): P
   const site = getSite(slug);
   if (!project && !site) return {};
   const title = project ? `${project.name}: ${project.kind}` : `${site!.name}: ${site!.kind}`;
-  const description = project ? project.line : `${site!.name} (${site!.kind}), one of eight live websites and frontend projects.`;
+  const description = project
+    ? project.line
+    : `${site!.name} (${site!.kind}): ${site!.status === "live" ? "a live website" : "a website in progress"} by Krishiv Sharma${site!.roles.length ? `, ${site!.roles.join(" and ")}` : ""}.`;
   return {
     title,
     description,
@@ -139,22 +141,25 @@ function SitePage({ site }: { site: Site }) {
         <Back />
         <div className="mt-10 grid gap-8 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-8">
-            <p className="eyebrow">Website</p>
+            <p className="eyebrow">{site.status === "live" ? "Website · live" : "Website · in progress"}</p>
             <h1 className="mt-4 text-[clamp(3.25rem,11vw,9.5rem)] leading-[0.88] font-semibold tracking-[-0.055em]">{site.name}</h1>
             <p className="mt-5 text-2xl tracking-[-0.02em] text-ink-2 sm:text-3xl">{site.kind}</p>
           </div>
           <div className="flex flex-wrap gap-3 lg:col-span-4 lg:justify-end">
             <a href={site.url} target="_blank" rel="noopener noreferrer" className="group btn btn-primary press">
-              Visit the live site <span aria-hidden className="nudge nudge-up">↗</span>
+              {site.status === "live" ? "Visit the live site" : "See the preview"} <span aria-hidden className="nudge nudge-up">↗</span>
               <span className="sr-only">(opens in a new tab)</span>
             </a>
           </div>
         </div>
         <Snapshot
           items={[
-            ...(site.role ? [{ label: "My role", value: site.role }] : []),
-            { label: "Address", value: <span className="font-mono text-[0.875rem] break-all">{site.domain ?? "Hosted preview"}</span> },
-            { label: "Status", value: "Live" },
+            ...(site.roles.length ? [{ label: "My role", value: site.roles.join(" and ") + (site.note ? ` — ${site.note.replace(/\.$/, "").toLowerCase()}` : "") }] : []),
+            {
+              label: "Address",
+              value: <span className="font-mono text-[0.875rem] break-all">{site.status === "live" ? site.domain : "Preview address"}</span>,
+            },
+            { label: "Status", value: site.status === "live" ? "Live" : "In progress" },
           ]}
         />
       </header>
@@ -176,7 +181,8 @@ function SitePage({ site }: { site: Site }) {
             Phone and <span className="serif text-accent">further down</span>
           </h2>
           <p className="max-w-[46ch] text-ink-2 lg:col-span-5 lg:col-start-8">
-            The homepage on a phone, and the first three screens on a desktop. Captured from the live site.
+            The homepage on a phone, and the first three screens on a desktop. Captured from the{" "}
+            {site.status === "live" ? "live site" : "work-in-progress preview"}.
           </p>
         </div>
 

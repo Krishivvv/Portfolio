@@ -6,7 +6,7 @@ UI/UX Pro Max + Taste Skill: `claude_code_skills.md` (supplied by the user as th
 
 History: V1 (2026-09-30) was a restrained single-page landing. The V2 directive judged it "too plain, too static, too close to a generic template" and asked for a motion-rich, art-directed, multi-page build. V1's verified content, diagrams, accessibility and performance work carry over; the design, routes and motion system are rebuilt.
 
-Status: see "Progress" at the bottom.
+Status: see "Progress" at the bottom. Krishiv's review of 2026-10-01 is in §8.
 
 ---
 
@@ -40,6 +40,8 @@ Every factual string on the site traces to `R` = `Krishiv/Krishiv_Resume.md` or 
 Not used although the research asserts them: "Senior", "Software Engineer & AI Product Builder", "Final Year", "available for roles", timezone widget, any metric not in R.
 
 ### Open questions for Krishiv
+Resolved 2026-10-01 (see §8): 7 (resume PDF supplied; same content as the .md), 9 (dates from the PDF), 10 (roles), 8 (defaults to the Worker address). 1: the portrait slot is built and waits for `assets/photo.jpg`.
+
 1. Portrait (About / hero moment) — portrait orientation, ≥1600 px. 2. VoiceDesk/Shiksha/Veridex screenshots or 10–20 s recordings (case-study heroes, hover previews). 3. Better website media (optional).
 4. Demo + repo links for the three AI projects (public repos appear at github.com/Krishivvv/VoiceDesk, /Shiksha, /Veridex; unused until confirmed). 5. LinkedIn / Instagram / WhatsApp. 6. OK to publish the phone number?
 7. Resume PDF. 8. Production domain (`SITE_URL`). 9. Internship date mapping (extraction order suggests FoCDoT = May–Nov 2025, AI Bricks = Jan–Mar 2026).
@@ -72,15 +74,17 @@ Not used although the research asserts them: "Senior", "Software Engineer & AI P
 | ink-2 | `#44413B` | secondary text | 8.55 |
 | muted | `#66625A` | muted text | 5.11 (4.66 on paper-2) |
 | line / line-strong | `#D3CDC0` / `#BDB6A8` | 1px borders | — |
-| accent (vermilion) | `#B8361A` | links, primary button, focus | 4.93 on paper; white on it 5.86 |
-| accent-hover | `#9A2B12` | hover | — |
-| accent-bright | `#DB4A26` | large graphics only | 3.52 (non-text) |
+| accent (ultramarine) | `#2B3BD1` | links, primary button, focus, closing chapter | 6.67 on paper; white on it 7.93 |
+| accent-hover | `#1F2BA6` | hover | — |
+| accent-bright | `#4A5CFF` | large graphics only | non-text |
 | night | `#121210` | ink-chapter background | — |
 | night-2 | `#1B1A17` | ink-chapter surface | — |
 | night-line | `#2E2C28` | ink-chapter borders | — |
 | night-text / night-muted | `#EEEBE4` / `#A5A095` | ink-chapter text | 15.75 / 7.20 |
-| night-accent | `#F2724F` | accent on ink | 6.52 |
-| error | `#A32A12` | copy failure | — |
+| night-accent | `#8E9BFF` | accent on ink | 7.40 |
+| error | `#B3261E` | copy failure | — |
+
+The first accent was vermilion `#B8361A`; Krishiv rejected the orange on 2026-10-01 ("not matching"; keep the light background). Ultramarine keeps the one-accent system and raises contrast everywhere.
 
 ### Type
 Schibsted Grotesk (OFL) for display and text; Instrument Serif italic (OFL) for editorial accent words, used sparingly; Fragment Mono (OFL) for metadata, stacks, diagram labels. Display: oversized, tight tracking, intentional line breaks, asymmetric alignment ("Krishiv" left, "Sharma" right).
@@ -89,7 +93,7 @@ Schibsted Grotesk (OFL) for display and text; Instrument Serif italic (OFL) for 
 12-column grid, 1320 px max, 16/32 px gutters; one radius family (8 px media, 999 px pills); 4/8 px spacing. Compositional variety per section: overlapping screenshot deck on the name, sticky layering (work rises over the hero), anchored preview list, offset parallax columns, pinned scrollytelling, full-bleed ink chapters, curtain footer.
 
 ## 4. Routes (V2 §4)
-`/` (landing, cinematic) · `/work` (index + filter) · `/work/[slug]` (3 AI case studies + 8 website pages) · `/about` · `/experience` · `/contact` · `/resume` · 404. Functional routes: native scroll, immediate content, small local motion only.
+`/` (landing, cinematic) · `/work` (index + filter) · `/work/[slug]` (3 AI case studies + 9 website pages) · `/about` · `/experience` · `/contact` · `/resume` · 404. Functional routes: native scroll, immediate content, small local motion only.
 
 ## 5. Motion inventory (V2 §12 — each a different motion type)
 1. Cinematic hero entrance — per-character masked rise, screenshot deck landing with overshoot, copy fade (CSS keyframes decided before first paint; skippable).
@@ -103,6 +107,12 @@ Schibsted Grotesk (OFL) for display and text; Instrument Serif italic (OFL) for 
 9. Project → case study — React `<ViewTransition>` shared element (title/media morph).
 10. Microinteractions — press scale, arrow nudge, underline draw, copy-email label swap, filter pill.
 11. Closing — scaling contact line and a curtain-reveal footer.
+12. Chapters dealt like cards — each chapter rises at 90 % scale and reaches full size as its top meets the screen's (CSS scroll-driven, `view()` timeline).
+13. Velocity marquee — giant site names (websites chapter) and resume themes (closing) drift sideways, speed up with scroll velocity and reverse with scroll direction (`useVelocity` + `useAnimationFrame`, paused off-screen).
+14. Sweeps and tilts — AI system titles sweep in from alternating sides; website cards tip upright while their screenshots settle in the frame (CSS scroll-driven).
+15. Portrait unveil — the photo frame opens out of a narrow window (CSS scroll-driven clip-path).
+16. Footer wordmark — the giant name rises out of a mask line as the footer is uncovered (`scroll(root)` timeline).
+17. Read-in statement — About words brighten in turn as it scrolls (CSS scroll-driven; replaced ~60 Motion components).
 Signature: **Inside Shiksha** — pinned scrollytelling; scroll progress drives the pipeline stage, stages are also clickable.
 Skip: real button, `portfolio-intro-skipped` in localStorage, Esc/scroll skip, replay in footer. Reduced motion: no intro, no Lenis, no scroll-linked motion, no view-transition animation.
 
@@ -125,13 +135,25 @@ Verification tools only (not in the project): Playwright, axe-core, Lighthouse.
 - Static export (`output: "export"`) for static hosting; screenshots pre-sized to WebP by `scripts/optimize-images.mjs` with a custom `next/image` loader.
 - Content-first motion: server HTML is always fully visible; reveals arm after hydration only for content below the fold (JavaScript delayed → content still readable).
 - Intro is CSS decided by a tiny inline script before first paint; LCP text is never hidden by it.
-- Deployment and git are handled by Krishiv (no commits or deploys from this build).
+- Deployment: Cloudflare Workers Builds deploys the "portfolio" Worker from GitHub (Krishivvv/Portfolio, main). `wrangler.jsonc` makes it an assets-only Worker serving `out/` (runs `npm run build` first); `lib/site.ts` defaults production URLs to https://portfolio.sharmakrishiv1205.workers.dev (override with `SITE_URL`). Earlier builds failed because the build required `SITE_URL` and there was no Wrangler config.
+- Windows: `next build` writes nested segment-prefetch files as folders there; `scripts/fix-segment-files.mjs` (postbuild) flattens them (no-op on Linux).
+- Landing chapters use `content-visibility: auto` with measured height estimates (first layout on phones covers only the hero).
+
+## 8. Krishiv's review (2026-10-01)
+- Roles are not experience: Experience = the two internships (dates from the resume PDF) + education. "Technical Head" moves to the websites — every site he built except Samarth Rao Studio; K2Aqua also "Partner". Shown on cards, website pages, `/experience` → "Other work", `/about`, and the resume's "Other work". Uniqform first.
+- Uniqform (uniqform.in) added as a live site: Technical Head, built in collaboration. Media captured 2026-10-01 after closing its sign-in dialog.
+- Samarth Rao Studio and Cricket Republic are in progress on preview addresses, not live: status "In progress" everywhere; copy now says nine websites, seven live.
+- Orange removed; ultramarine accent (see tokens). Light background kept.
+- Photo space: `components/portrait.tsx` on `/about` and the landing About; shows a monogram until `assets/photo.jpg` exists (then sized by `scripts/optimize-images.mjs`).
+- "Bolder motion": items 12–17 in §5. All respect reduced motion; scroll-driven ones fall back to the finished state where unsupported.
+- `Krishiv_Resume (2).pdf` is not committed (it includes the phone number; the site never shows it).
 
 ## Progress
 - [x] Audit, research (21st.dev, Figma Community, references), content model
 - [x] Design system (three directions explored; B chosen)
-- [ ] Foundations (tokens, fonts, motion provider, header/menu/footer)
-- [ ] Landing
-- [ ] Functional pages
-- [ ] Polish & iterate (V2 §46)
-- [ ] Test (V2 §45) & cleanup
+- [x] Foundations (tokens, fonts, motion provider, header/menu/footer)
+- [x] Landing
+- [x] Functional pages
+- [x] Polish & iterate (V2 §46)
+- [x] Test (V2 §45) & cleanup
+- [x] Krishiv's review (§8) applied and re-tested; deployment configured

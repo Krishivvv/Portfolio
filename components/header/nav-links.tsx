@@ -14,7 +14,7 @@ type Pill = { x: number; width: number; glide: boolean };
 
 // Desktop navigation: one highlight glides between links under the pointer or
 // keyboard focus (it animates x and width, so no layout projection is needed);
-// the current page carries a vermilion dot.
+// the current page carries an ultramarine dot.
 export function NavLinks() {
   const pathname = usePathname();
   const [pill, setPill] = useState<Pill | null>(null);

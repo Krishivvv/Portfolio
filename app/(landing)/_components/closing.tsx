@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRef } from "react";
 
 import { CopyEmail } from "@/components/copy-email";
+import { Marquee } from "@/components/motion/marquee";
 import { Reveal, SplitWords } from "@/components/motion/reveal";
 import { RICH_MOTION, useMedia } from "@/components/motion/use-media";
 import { mailto, profile } from "@/content/profile";
@@ -19,7 +20,7 @@ export function Closing() {
   const x = useTransform(scrollYProgress, [0, 1], ["-6%", "0%"]);
 
   return (
-    <section id="contact" aria-labelledby="contact-title" className="chapter flame relative z-10 -mt-8 rounded-t-[2rem] pt-24 pb-28 sm:pt-32 sm:pb-40">
+    <section id="contact" aria-labelledby="contact-title" className="chapter ultra relative z-10 -mt-8 overflow-clip rounded-t-[2rem] pt-24 pb-16 sm:pt-32 sm:pb-20">
       <div className="mx-auto max-w-[1320px] px-4 sm:px-8">
         <p className="eyebrow">Contact</p>
         <Reveal variant="words" as="h2" id="contact-title" className="mt-6 max-w-[14ch] text-mega font-semibold">
@@ -51,6 +52,13 @@ export function Closing() {
           </Link>
         </div>
       </div>
+
+      <Marquee
+        items={["AI products", "Agentic workflows", "RAG", "LLM pipelines", "Deepfake detection", "Websites"]}
+        speed={3}
+        className="mt-20 text-[clamp(3rem,8.5vw,8rem)] leading-[1.08] font-semibold tracking-[-0.05em] text-white sm:mt-28"
+        separatorClassName="text-white/45"
+      />
     </section>
   );
 }

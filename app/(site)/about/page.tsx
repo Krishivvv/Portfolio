@@ -3,7 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { PageHeader } from "@/components/page-header";
-import { roles } from "@/content/experience";
+import { Portrait } from "@/components/portrait";
+import { otherWork } from "@/content/experience";
 import { profile } from "@/content/profile";
 import { projects } from "@/content/projects";
 import { skillGroups, skills } from "@/content/skills";
@@ -11,7 +12,7 @@ import { sites } from "@/content/sites";
 import { openGraph } from "@/lib/site";
 
 const description =
-  "Computer Science undergraduate in Bhopal who ships AI products and builds websites: three deployed AI apps and eight live websites.";
+  "Computer Science undergraduate in Bhopal who ships AI products and builds websites: three deployed AI apps and nine websites, seven of them live.";
 
 export const metadata: Metadata = {
   title: "About",
@@ -37,41 +38,44 @@ export default function AboutPage() {
               LLM video-generation pipeline, and a deepfake CNN classifier.
             </p>
             <p className="text-ink-2">
-              I also build websites and frontend projects — eight are live — and I’ve done two ML and data internships,
-              at FoCDoT Technologies and AI Bricks Realtors. I’m comfortable across Python, PyTorch, LangChain and
-              FastAPI.
+              I also build websites and frontend projects — nine so far, seven of them live — as their Technical Head.
+              I’ve done two ML and data internships, at FoCDoT Technologies and AI Bricks Realtors, and I’m comfortable
+              across Python, PyTorch, LangChain and FastAPI.
             </p>
             <p className="text-ink-2">Next, I want to build agentic and LLM-backed features on a real product team.</p>
           </div>
 
-          <dl className="grid content-start gap-6 border-t border-line pt-6 lg:col-span-4 lg:col-start-9">
-            <div>
-              <dt className="eyebrow">Based in</dt>
-              <dd className="mt-1 text-lg">{profile.location}</dd>
-            </div>
-            <div>
-              <dt className="eyebrow">Studying</dt>
-              <dd className="mt-1 text-lg">
-                {profile.education[0].degree} · {profile.education[0].school} · {profile.education[0].period.toLowerCase()}
-              </dd>
-            </div>
-            <div>
-              <dt className="eyebrow">Roles</dt>
-              <dd className="mt-1">
-                <ul className="text-lg">
-                  {roles.map((r) => (
-                    <li key={r.url}>
-                      {r.role},{" "}
-                      <a href={r.url} target="_blank" rel="noopener noreferrer" className="press link inline-flex min-h-6 items-center">
-                        {r.org}
-                        <span className="sr-only"> (opens in a new tab)</span>
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </dd>
-            </div>
-          </dl>
+          <div className="grid content-start gap-8 lg:col-span-4 lg:col-start-9">
+            <Portrait sizes="(min-width: 1024px) 400px, (min-width: 640px) 60vw, 92vw" className="max-w-[420px]" />
+            <dl className="grid content-start gap-6 border-t border-line pt-6">
+              <div>
+                <dt className="eyebrow">Based in</dt>
+                <dd className="mt-1 text-lg">{profile.location}</dd>
+              </div>
+              <div>
+                <dt className="eyebrow">Studying</dt>
+                <dd className="mt-1 text-lg">
+                  {profile.education[0].degree} · {profile.education[0].school} · {profile.education[0].period.toLowerCase()}
+                </dd>
+              </div>
+              <div>
+                <dt className="eyebrow">Other work</dt>
+                <dd className="mt-1">
+                  <ul className="text-lg">
+                    {otherWork.map((site) => (
+                      <li key={site.slug}>
+                        {site.roles.join(" and ")},{" "}
+                        <Link href={`/work/${site.slug}`} className="press link inline-flex min-h-6 items-center">
+                          {site.name}
+                        </Link>
+                        {site.note && <span className="text-muted"> — {site.note.replace(/\.$/, "").toLowerCase()}</span>}
+                      </li>
+                    ))}
+                  </ul>
+                </dd>
+              </div>
+            </dl>
+          </div>
         </div>
       </section>
 
@@ -103,7 +107,7 @@ export default function AboutPage() {
                 <span className="eyebrow">The interface</span>
                 <span className="mt-4 block text-4xl font-semibold tracking-[-0.04em]">Websites</span>
               </span>
-              <span aria-hidden className="grid grid-cols-4 gap-2">
+              <span aria-hidden className="grid grid-cols-3 gap-2">
                 {sites.map((s) => (
                   <span key={s.slug} className="relative block aspect-[16/10] overflow-hidden rounded-[4px] border border-line">
                     <Image src={s.image} alt="" fill sizes="140px" className="object-cover object-top transition-transform duration-500 group-hover:scale-105" />
@@ -111,7 +115,7 @@ export default function AboutPage() {
                 ))}
               </span>
               <span className="inline-flex items-center gap-2 font-medium text-accent">
-                See all eight <span aria-hidden className="nudge">→</span>
+                See all nine <span aria-hidden className="nudge">→</span>
               </span>
             </Link>
           </div>

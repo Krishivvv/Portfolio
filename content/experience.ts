@@ -1,6 +1,7 @@
-// Internships: Krishiv_Resume.md, "Experience". Dates are withheld until Krishiv
-// confirms which range belongs to which role (BUILD_NOTES.md, Q9).
-// Roles: data.md.
+import { type Site, sites } from "./sites";
+
+// Internships: Krishiv_Resume.md, "Experience"; the dates are the ones the
+// resume PDF (Krishiv_Resume (2).pdf) prints beside each role.
 
 export type Internship = {
   role: string;
@@ -15,6 +16,7 @@ export const internships: Internship[] = [
     role: "Machine Learning Intern",
     org: "FoCDoT Technologies",
     place: "Bhopal",
+    period: "May 2025 – Nov 2025",
     points: [
       "Built and evaluated supervised and unsupervised models (linear/logistic regression, decision trees, random forests, gradient boosting, neural networks) with Scikit-learn, TensorFlow and Keras.",
       "Improved model accuracy up to 15% on various datasets through feature engineering and hyperparameter tuning.",
@@ -25,6 +27,7 @@ export const internships: Internship[] = [
     role: "Data Analyst Intern",
     org: "AI Bricks Realtors Pvt Ltd",
     place: "Pune",
+    period: "Jan 2026 – Mar 2026",
     points: [
       "Built dynamic dashboards in Python and Power BI, turning complex real-estate performance metrics into clear, actionable insights for stakeholders.",
       "Analyzed client-preference and property-feature data alongside agents to inform market and pricing decisions.",
@@ -33,15 +36,7 @@ export const internships: Internship[] = [
   },
 ];
 
-export type Role = { role: string; org: string; url: string; domain: string };
-
-export const roles: Role[] = [
-  { role: "Partner", org: "K2Aqua", url: "https://k2aqua.in", domain: "k2aqua.in" },
-  {
-    role: "Technical Head",
-    org: "Samarth Rao Studio",
-    url: "https://samarth-rao-studio.vercel.app",
-    domain: "samarth-rao-studio.vercel.app",
-  },
-  { role: "Technical Head", org: "Uniqform", url: "https://uniqform.in", domain: "uniqform.in" },
-];
+// Other work: the roles Krishiv holds on the websites he built. They are not
+// experience (Krishiv, 2026-10-01), so they sit apart from the internships.
+// Uniqform comes first; the order follows content/sites.ts.
+export const otherWork: Site[] = sites.filter((s) => s.roles.length > 0);

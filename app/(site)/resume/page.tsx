@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { internships, roles } from "@/content/experience";
+import { internships, otherWork } from "@/content/experience";
 import { mailto, profile } from "@/content/profile";
 import { projects } from "@/content/projects";
 import { sites } from "@/content/sites";
@@ -18,7 +18,8 @@ export const metadata: Metadata = {
   openGraph: openGraph("/resume", { title: `Resume — ${profile.name}`, description }),
 };
 
-// Krishiv_Resume.md, in the resume's own order. "Roles and websites" comes from data.md.
+// Krishiv_Resume.md / Krishiv_Resume (2).pdf, in the resume's own order. "Other work"
+// comes from content/sites.ts (roles confirmed by Krishiv, 2026-10-01).
 const summary =
   "Computer Science undergraduate (B.Tech, 2027) who ships AI products, not just notebooks — three deployed apps spanning an agentic voice-support system (RAG + LangChain), an end-to-end LLM video-generation pipeline, and a deepfake CNN classifier. Two ML/data internships. Comfortable across Python, PyTorch, LangChain and FastAPI, and keen to build agentic and LLM-backed features on a real product team.";
 
@@ -127,27 +128,30 @@ export default function ResumePage() {
         </ul>
       </Block>
 
-      <Block title="Roles and websites">
+      {/* Not experience (Krishiv, 2026-10-01): the websites he builds, with his role on each. */}
+      <Block title="Other work">
         <ul className="space-y-2">
-          {roles.map((r) => (
-            <li key={r.url}>
-              {r.role}, {r.org} ·{" "}
-              <a href={r.url} className="press link inline-flex min-h-6 items-center font-mono text-[0.8125rem] text-ink-2">
-                {r.domain}
+          {otherWork.map((site) => (
+            <li key={site.slug}>
+              <span className="font-medium">{site.roles.join(" and ")}</span>, {site.name} ·{" "}
+              <a href={site.url} className="press link inline-flex min-h-6 items-center font-mono text-[0.8125rem] text-ink-2">
+                {site.status === "live" ? site.domain : "preview"}
               </a>
+              {site.status === "in-progress" && <span className="text-ink-2"> (in progress)</span>}
+              {site.note && <span className="text-ink-2"> — {site.note.replace(/\.$/, "").toLowerCase()}</span>}
             </li>
           ))}
         </ul>
-        <p className="mt-4 text-ink-2">Websites and frontend projects:</p>
-        <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1">
-          {sites.map((s) => (
-            <li key={s.url}>
-              <a href={s.url} className="press link inline-flex min-h-6 items-center">
-                {s.name}
-              </a>
-            </li>
-          ))}
-        </ul>
+        {sites.some((site) => site.roles.length === 0) && (
+          <p className="mt-4 text-ink-2">
+            Also in progress:{" "}
+            {sites
+              .filter((site) => site.roles.length === 0)
+              .map((site) => site.name)
+              .join(", ")}
+            .
+          </p>
+        )}
       </Block>
     </div>
   );

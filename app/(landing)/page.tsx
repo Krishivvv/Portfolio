@@ -38,8 +38,12 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(person).replace(/</g, "\\u003c") }}
       />
-      <Hero />
-      <WorkSystems />
+      {/* The hero stays pinned only while the first chapter rises over it, then
+          leaves with it, so later chapters rise over plain paper. */}
+      <div className="relative">
+        <Hero />
+        <WorkSystems />
+      </div>
       <WorkWebsites />
       <Capabilities />
       <Experience />

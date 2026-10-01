@@ -10,12 +10,14 @@ import { duration, ease, stagger } from "@/lib/motion";
 // then animated once as they enter. With JavaScript delayed or reduced motion,
 // nothing is ever hidden.
 
-type Variant = "rise" | "clip" | "scale" | "words";
+type Variant = "rise" | "slide" | "clip" | "scale" | "words";
 
 type Keyframes = Record<string, string | number>;
 
 const states: Record<Variant, { from: Keyframes; to: Keyframes; target?: string }> = {
   rise: { from: { opacity: 0, y: 32 }, to: { opacity: 1, y: 0 } },
+  // Arrives from the right, for entries that read as a sequence.
+  slide: { from: { opacity: 0, x: 72 }, to: { opacity: 1, x: 0 } },
   scale: { from: { opacity: 0, scale: 0.94 }, to: { opacity: 1, scale: 1 } },
   // Media wipes up from the bottom edge. The clip goes on the children: Chrome's
   // IntersectionObserver measures the clipped box, and a fully clipped wrapper

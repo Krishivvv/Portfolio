@@ -1,0 +1,19 @@
+// Cloudflare Workers deployment: the "portfolio" Worker, deployed by Workers
+// Builds on every push to main. The site is a static export (next.config.ts,
+// output: "export"), so the Worker only serves the files in out/: no server code.
+{
+  "name": "portfolio",
+  "compatibility_date": "2026-09-01",
+  // Builds the static export first, so a deploy never ships a missing or stale out/.
+  "build": {
+    "command": "npm run build"
+  },
+  "assets": {
+    "directory": "./out",
+    // /about serves out/about.html; unknown paths get out/404.html with a 404.
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  // Public at portfolio.sharmakrishiv1205.workers.dev (the default SITE_URL in lib/site.ts).
+  "workers_dev": true
+}

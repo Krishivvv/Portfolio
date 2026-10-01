@@ -12,7 +12,7 @@ html[data-intro="play"] .skip-intro {
 
 /* Chapters are sheets with their own top padding, and the header hides while
    scrolling down, so anchors land flush with the sheet's rounded edge. */
-main > section[id] {
+.chapter {
   scroll-margin-top: 0;
 }
 
@@ -21,7 +21,36 @@ main > section[id] {
    the browser remember each chapter's real height once it has been seen. */
 .chapter {
   content-visibility: auto;
-  contain-intrinsic-size: auto 1400px;
+  contain-intrinsic-size: auto var(--chapter-h, 1400px);
+}
+/* Measured content heights (padding comes on top), so the page barely shifts
+   when a chapter first renders. */
+#work { --chapter-h: 1110px; }
+/* Card heights follow the viewport width. */
+#websites { --chapter-h: calc(3531px + (100vw - 320px) * 4.5); }
+#capabilities { --chapter-h: 1250px; }
+#experience { --chapter-h: 1550px; }
+#engineering { --chapter-h: 1480px; }
+#about { --chapter-h: 1240px; }
+#contact { --chapter-h: 540px; }
+@media (min-width: 640px) {
+  #work { --chapter-h: 1090px; }
+  #websites { --chapter-h: 2620px; }
+  #capabilities { --chapter-h: 956px; }
+  #experience { --chapter-h: 1380px; }
+  #engineering { --chapter-h: 1640px; }
+  #about { --chapter-h: 950px; }
+  #contact { --chapter-h: 570px; }
+}
+@media (min-width: 1024px) {
+  #work { --chapter-h: 1300px; }
+  #websites { --chapter-h: min(2150px, calc(1781px + (100vw - 1024px))); }
+  #capabilities { --chapter-h: 790px; }
+  #experience { --chapter-h: 1065px; }
+  /* The pinned stage is 250vh of scroll plus the heading. */
+  #engineering { --chapter-h: calc(250vh + 663px); }
+  #about { --chapter-h: min(840px, calc(613px + (100vw - 1024px) * 0.45)); }
+  #contact { --chapter-h: calc(33vw + 320px); }
 }
 
 /* Name: each line is a mask; each character rises through it. */
@@ -72,7 +101,7 @@ html[data-intro="play"] .hero-fade {
 }
 
 /* About: the statement reads itself in. Unread words stay at 3:1 or better
-   against the page (large text); vermilion serif words need less dimming. */
+   against the page (large text); ultramarine serif words need less dimming. */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
     .read-in {
@@ -85,13 +114,90 @@ html[data-intro="play"] .hero-fade {
       animation-range: cover calc(12% + var(--i) / var(--n) * 38%) cover calc(20% + var(--i) / var(--n) * 38%);
     }
     .read-in > .serif {
-      --from: 0.72;
+      --from: 0.62;
     }
   }
 }
 @keyframes read-in {
   from {
     opacity: var(--from);
+  }
+}
+
+/* Scroll-driven motion: native CSS animations tied to scroll position, run by
+   the compositor (no JavaScript, no scroll hijacking). Browsers without
+   scroll-driven animations, and reduced motion, get the finished state. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* Chapters are dealt like cards: each rises in slightly smaller and
+       reaches full size as its top meets the top of the screen. */
+    .chapter {
+      transform-origin: 50% 0;
+      animation: chapter-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 100%;
+    }
+    /* The AI system titles sweep in from alternating sides. */
+    .sd-sweep {
+      --sweep: -16vw;
+      animation: sweep linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 30%;
+    }
+    .sd-sweep:nth-child(even) {
+      --sweep: 16vw;
+    }
+    /* Website cards tip upright as they arrive... */
+    .sd-tilt {
+      animation: tilt linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 32%;
+    }
+    .sd-tilt:nth-child(even) {
+      --tilt: 5deg;
+    }
+    /* ...and their screenshots settle into the frame. */
+    .sd-zoom {
+      animation: zoom linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 55%;
+    }
+    /* The portrait opens out of a narrow window. */
+    .sd-unveil {
+      animation: unveil linear both;
+      animation-timeline: view();
+      animation-range: entry 5% cover 45%;
+    }
+  }
+}
+@keyframes chapter-rise {
+  from {
+    scale: 0.9;
+  }
+}
+@keyframes sweep {
+  from {
+    translate: var(--sweep) 0;
+  }
+}
+@keyframes tilt {
+  from {
+    translate: 0 90px;
+    rotate: var(--tilt, -5deg);
+  }
+}
+@keyframes zoom {
+  from {
+    scale: 1.32;
+  }
+}
+@keyframes unveil {
+  from {
+    clip-path: inset(22% 26% 22% 26% round 12px);
+    scale: 1.12;
+  }
+  to {
+    clip-path: inset(0 0 0 0 round 0);
   }
 }
 

@@ -38,7 +38,7 @@ export function WorkSystems() {
             {projects.map((p) => (
               <li
                 key={p.slug}
-                className="border-t border-night-line transition-opacity duration-300 last:border-b group-hover/list:opacity-40 hover:opacity-100! has-[:focus-visible]:opacity-100!"
+                className="sd-sweep border-t border-night-line transition-opacity duration-300 last:border-b group-hover/list:opacity-40 hover:opacity-100! has-[:focus-visible]:opacity-100!"
               >
                 <Link
                   href={`/work/${p.slug}`}

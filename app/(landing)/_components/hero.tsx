@@ -9,7 +9,7 @@ import { mailto, profile } from "@/content/profile";
 import { projects } from "@/content/projects";
 import { getSite } from "@/content/sites";
 
-const deck = ["sapien", "navada-group", "arthbrands"].map((slug) => getSite(slug)!);
+const deck = ["sapien", "uniqform", "arthbrands"].map((slug) => getSite(slug)!);
 // Resting pose of each card (front card last).
 const pose = [
   { x: "-34%", y: "10%", r: -9 },
@@ -74,8 +74,8 @@ export function Hero() {
   const rich = useMedia(RICH_MOTION);
   const { scrollY } = useScroll();
   const progress = useTransform(scrollY, [0, 760], [0, 1], { clamp: true });
-  const leftX = useTransform(progress, [0, 1], ["0vw", "-7vw"]);
-  const rightX = useTransform(progress, [0, 1], ["0vw", "7vw"]);
+  const leftX = useTransform(progress, [0, 1], ["0vw", "-13vw"]);
+  const rightX = useTransform(progress, [0, 1], ["0vw", "13vw"]);
   const scale = useTransform(progress, [0, 1], [1, 0.94]);
   const dim = useTransform(progress, [0, 1], [0, 0.4]);
 
@@ -89,7 +89,7 @@ export function Hero() {
       className="relative z-0 overflow-clip [@media(min-width:1024px)_and_(min-height:640px)]:sticky [@media(min-width:1024px)_and_(min-height:640px)]:top-0"
     >
       {/* One screen below the header, so the calls to action sit above the fold. */}
-      <m.div style={rich ? { scale } : undefined} className="relative flex min-h-[calc(100svh-4rem-1px)] flex-col bg-paper pt-[4.5rem] pb-8 sm:pt-24">
+      <m.div style={rich ? { scale } : undefined} className="relative flex min-h-[calc(100svh-4rem-1px)] flex-col overflow-clip bg-paper pt-[4.5rem] pb-8 sm:pt-24">
         <div className="mx-auto flex w-full max-w-[1320px] flex-1 flex-col px-4 sm:px-8">
           {/* Leaves room at the right for the Skip animation button while the intro plays. */}
           <p className="hero-fade flex flex-wrap justify-between gap-x-6 gap-y-1 font-mono text-[0.75rem] text-muted sm:pr-48" style={i(0)}>
@@ -107,7 +107,7 @@ export function Hero() {
               </m.span>
             </h1>
 
-            {/* Three of the eight live websites, layered over the name. */}
+            {/* Three of the live websites, layered over the name. */}
             <div className="relative mx-auto mt-10 aspect-[16/12] w-[74vw] max-w-[440px] lg:absolute lg:top-[16%] lg:right-[9%] lg:mt-0 lg:w-[30vw]">
               {deck.map((site, n) => (
                 <DeckCard key={site.slug} index={n} progress={progress} rich={rich} />
@@ -117,14 +117,16 @@ export function Hero() {
 
           <div className="mt-10 grid gap-8 lg:mt-4 lg:grid-cols-12 lg:items-end">
             <div className="lg:col-span-7">
-              {/* The statement and its supporting line are the LCP text: they never wait for the intro. */}
-              <p className="max-w-[20ch] text-[clamp(1.75rem,3.4vw,3rem)] leading-[1.05] font-medium tracking-[-0.03em]">
-                I build <span className="serif text-accent">AI products</span> and{" "}
-                <span className="serif text-accent">websites</span>.
+              {/* The statement and its supporting line are the LCP text: they never wait for the intro.
+                  Its line breaks are fixed (two lines, one from lg), so the web font arriving never
+                  re-wraps it and shifts the name above. */}
+              <p className="text-[clamp(1.75rem,3.4vw,3rem)] leading-[1.05] font-medium tracking-[-0.03em] lg:whitespace-nowrap">
+                I build <span className="serif text-accent">AI products</span>
+                <br className="lg:hidden" /> and <span className="serif text-accent">websites</span>.
               </p>
-              <p className="mt-4 max-w-[46ch] text-ink-2">
+              <p className="mt-4 max-w-[28em] text-ink-2">
                 Three deployed AI apps — an agentic voice-support system, an LLM video-generation pipeline and a deepfake
-                classifier — and eight live websites.
+                classifier — and nine websites, seven of them live.
               </p>
               <div className="hero-fade mt-7 flex flex-wrap gap-3" style={i(2)}>
                 <Link href="#work" className="group btn btn-primary press">
@@ -156,7 +158,7 @@ export function Hero() {
                 <li className="border-b border-line">
                   <Link href="/work" className="group press flex min-h-11 items-center justify-between gap-4">
                     <span>
-                      Websites <span className="text-muted">· 8 live</span>
+                      Websites <span className="text-muted">· 7 live, 2 in progress</span>
                     </span>
                     <span aria-hidden className="nudge text-accent">
                       →

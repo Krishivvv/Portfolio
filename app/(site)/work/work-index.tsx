@@ -112,9 +112,10 @@ export function WorkIndex() {
                     </ViewTransition>
                     <span className="mt-4 flex items-start justify-between gap-4">
                       <span>
-                        <span className="eyebrow block">Website</span>
+                        <span className="eyebrow block">{s.status === "live" ? "Website · live" : "Website · in progress"}</span>
                         <span className="mt-1 block text-xl font-medium tracking-[-0.02em]">{s.name}</span>
                         <span className="block text-sm text-muted">{s.kind}</span>
+                        {s.roles.length > 0 && <span className="mt-1 block font-mono text-[0.75rem] text-ink-2">{s.roles.join(" · ")}</span>}
                       </span>
                       <span aria-hidden className="nudge mt-5 text-accent">
                         →
