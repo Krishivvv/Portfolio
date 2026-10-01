@@ -47,7 +47,7 @@ export default function AboutPage() {
           </div>
 
           <div className="grid content-start gap-8 lg:col-span-4 lg:col-start-9">
-            <Portrait sizes="(min-width: 1024px) 400px, (min-width: 640px) 60vw, 92vw" className="max-w-[420px]" />
+            <Portrait sizes="(min-width: 1024px) 400px, (min-width: 640px) 320px, 240px" className="max-w-[240px] sm:max-w-[320px] lg:max-w-[420px]" />
             <dl className="grid content-start gap-6 border-t border-line pt-6">
               <div>
                 <dt className="eyebrow">Based in</dt>

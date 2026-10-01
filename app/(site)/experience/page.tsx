@@ -71,17 +71,17 @@ export default function ExperiencePage() {
             </h2>
             <p className="mt-3 max-w-[30ch] text-ink-2">The websites I build, and my role on each.</p>
           </div>
-          <ul className="grid gap-4 sm:grid-cols-2 lg:col-span-9 lg:grid-cols-3">
+          <ul className="grid grid-cols-2 gap-3 sm:gap-4 lg:col-span-9 lg:grid-cols-3">
             {otherWork.map((site) => (
               <li key={site.slug}>
                 <Link
                   href={`/work/${site.slug}`}
-                  className="group press flex h-full flex-col gap-2 rounded-media border border-line bg-paper-3 p-6 transition-colors hover:border-ink"
+                  className="group press flex h-full flex-col gap-2 rounded-media border border-line bg-paper-3 p-4 transition-colors hover:border-ink sm:p-6"
                 >
                   <span className="eyebrow">{site.roles.join(" · ")}</span>
-                  <span className="text-2xl font-semibold tracking-[-0.03em]">{site.name}</span>
-                  {site.note && <span className="text-ink-2">{site.note}</span>}
-                  <span className="mt-auto flex items-center justify-between gap-4 pt-6 font-mono text-[0.75rem] text-muted">
+                  <span className="text-lg leading-tight font-semibold tracking-[-0.03em] sm:text-2xl">{site.name}</span>
+                  {site.note && <span className="text-sm text-ink-2 sm:text-base">{site.note}</span>}
+                  <span className="mt-auto flex items-center justify-between gap-2 pt-4 font-mono text-[0.6875rem] text-muted sm:gap-4 sm:pt-6 sm:text-[0.75rem]">
                     <span className="break-all">{site.status === "live" ? site.domain : "In progress"}</span>
                     <span aria-hidden className="nudge text-accent">
                       →

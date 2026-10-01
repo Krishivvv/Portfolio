@@ -39,7 +39,8 @@ export function Closing() {
           {profile.email}
         </m.a>
 
-        <div className="mt-12 flex flex-wrap items-center gap-3">
+        {/* Phones: a tidy two-by-two grid of equal buttons. */}
+        <div className="mt-12 grid grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:items-center">
           <a href={mailto} className="group btn btn-primary press">
             Email me <span aria-hidden className="nudge">→</span>
           </a>

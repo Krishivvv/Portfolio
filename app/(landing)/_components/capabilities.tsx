@@ -48,7 +48,14 @@ export function Capabilities() {
             </p>
           </div>
 
-          <div role="group" aria-label="Show the tools used in" className="mt-12 flex flex-wrap gap-2">
+            {/* One swipeable row on phones (layoutScroll keeps the pill's slide right
+              while scrolled); wraps from sm. */}
+          <m.div
+            layoutScroll
+            role="group"
+            aria-label="Show the tools used in"
+            className="-mx-4 mt-12 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 [&::-webkit-scrollbar]:hidden"
+          >
             {(["all", ...projects.map((p) => p.slug)] as Filter[]).map((key) => {
               const label = key === "all" ? "Everything" : projects.find((p) => p.slug === key)!.name;
               return (
@@ -57,7 +64,7 @@ export function Capabilities() {
                   type="button"
                   aria-pressed={filter === key}
                   onClick={() => setFilter(key)}
-                  className="press relative inline-flex min-h-11 items-center rounded-full border border-line-strong px-5 text-[0.9375rem] aria-pressed:border-ink aria-pressed:text-paper"
+                  className="press relative inline-flex min-h-11 shrink-0 items-center rounded-full border border-line-strong px-5 text-[0.9375rem] aria-pressed:border-ink aria-pressed:text-paper"
                 >
                   {filter === key && (
                     <m.span layoutId="capability-filter" className="absolute inset-0 rounded-full bg-ink" transition={spring} />
@@ -66,7 +73,7 @@ export function Capabilities() {
                 </button>
               );
             })}
-          </div>
+          </m.div>
           <p aria-live="polite" className="mt-4 min-h-6 font-mono text-[0.75rem] text-muted">
             {project
               ? `${used!.size} of ${total} resume skills in ${project.name}` +

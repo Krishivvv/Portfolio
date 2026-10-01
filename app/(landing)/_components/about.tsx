@@ -37,7 +37,7 @@ export function About() {
               </span>
             ))}
           </p>
-          <Portrait sizes="(min-width: 1024px) 360px, 80vw" className="sd-unveil w-full max-w-[340px] lg:col-span-4 lg:justify-self-end" />
+          <Portrait sizes="(min-width: 1024px) 360px, 80vw" className="sd-unveil w-full max-w-[230px] sm:max-w-[300px] lg:col-span-4 lg:max-w-[340px] lg:justify-self-end" />
         </div>
 
         <div className="mt-16 grid gap-8 border-t border-line pt-8 sm:grid-cols-2 lg:grid-cols-4">

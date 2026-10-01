@@ -27,21 +27,27 @@ export function WorkIndex() {
   return (
     <LayoutFeatures>
       <div className="mx-auto max-w-[1320px] px-4 pb-24 sm:px-8 sm:pb-32">
-        <div role="group" aria-label="Filter work" className="flex flex-wrap gap-2 border-b border-line pb-6">
+        {/* One swipeable row on phones (layoutScroll keeps the pill's slide right while scrolled). */}
+        <m.div
+          layoutScroll
+          role="group"
+          aria-label="Filter work"
+          className="-mx-4 flex gap-2 overflow-x-auto border-b border-line px-4 pb-6 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 [&::-webkit-scrollbar]:hidden"
+        >
           {filters.map((f) => (
             <button
               key={f.key}
               type="button"
               aria-pressed={filter === f.key}
               onClick={() => setFilter(f.key)}
-              className="press relative inline-flex min-h-11 items-center gap-2 rounded-full border border-line-strong px-5 text-[0.9375rem] aria-pressed:border-ink aria-pressed:text-paper"
+              className="press relative inline-flex min-h-11 shrink-0 items-center gap-2 rounded-full border border-line-strong px-5 text-[0.9375rem] aria-pressed:border-ink aria-pressed:text-paper"
             >
               {filter === f.key && <m.span layoutId="work-filter" className="absolute inset-0 rounded-full bg-ink" transition={spring} />}
               <span className="relative">{f.label}</span>
               <span className="relative font-mono text-[0.75rem] opacity-70">{f.count}</span>
             </button>
           ))}
-        </div>
+        </m.div>
 
         <m.ul layout className="mt-10 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
           <AnimatePresence mode="popLayout" initial={false}>

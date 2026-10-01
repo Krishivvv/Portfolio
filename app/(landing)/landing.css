@@ -26,20 +26,20 @@ html[data-intro="play"] .skip-intro {
 /* Measured content heights (padding comes on top), so the page barely shifts
    when a chapter first renders. */
 #work { --chapter-h: 1110px; }
-/* Card heights follow the viewport width. */
-#websites { --chapter-h: calc(3531px + (100vw - 320px) * 4.5); }
-#capabilities { --chapter-h: 1250px; }
+/* A swipeable row on phones and tablets. */
+#websites { --chapter-h: 790px; }
+#capabilities { --chapter-h: 1200px; }
 #experience { --chapter-h: 1550px; }
 #engineering { --chapter-h: 1480px; }
-#about { --chapter-h: 1240px; }
+#about { --chapter-h: 1180px; }
 #contact { --chapter-h: 540px; }
 @media (min-width: 640px) {
   #work { --chapter-h: 1090px; }
-  #websites { --chapter-h: 2620px; }
+  #websites { --chapter-h: 860px; }
   #capabilities { --chapter-h: 956px; }
   #experience { --chapter-h: 1380px; }
   #engineering { --chapter-h: 1640px; }
-  #about { --chapter-h: 950px; }
+  #about { --chapter-h: 980px; }
   #contact { --chapter-h: 570px; }
 }
 @media (min-width: 1024px) {
@@ -51,6 +51,14 @@ html[data-intro="play"] .skip-intro {
   #engineering { --chapter-h: calc(250vh + 663px); }
   #about { --chapter-h: min(840px, calc(613px + (100vw - 1024px) * 0.45)); }
   #contact { --chapter-h: calc(33vw + 320px); }
+}
+
+/* Below lg the name fills the width (bounded by height for landscape phones);
+   large screens keep --text-display. */
+@media (max-width: 1023.98px) {
+  #hero-title {
+    font-size: min(25vw, 30svh);
+  }
 }
 
 /* Name: each line is a mask; each character rises through it. */
@@ -147,6 +155,14 @@ html[data-intro="play"] .hero-fade {
     .sd-sweep:nth-child(even) {
       --sweep: 16vw;
     }
+    /* Phones and tablets: titles rise instead, so they never leave the screen. */
+    @media (max-width: 1023.98px) {
+      .sd-sweep,
+      .sd-sweep:nth-child(even) {
+        --sweep: 0px;
+        --sweep-y: 56px;
+      }
+    }
     /* Website cards tip upright as they arrive... */
     .sd-tilt {
       animation: tilt linear both;
@@ -177,7 +193,7 @@ html[data-intro="play"] .hero-fade {
 }
 @keyframes sweep {
   from {
-    translate: var(--sweep) 0;
+    translate: var(--sweep) var(--sweep-y, 0px);
   }
 }
 @keyframes tilt {

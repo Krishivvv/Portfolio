@@ -1,6 +1,6 @@
 "use client";
 
-import { m, useScroll, useTransform } from "motion/react";
+import { m, type MotionValue, useScroll, useTransform } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRef, ViewTransition } from "react";
@@ -10,14 +10,16 @@ import { Reveal, SplitWords } from "@/components/motion/reveal";
 import { RICH_MOTION, useMedia } from "@/components/motion/use-media";
 import { type Site, sites } from "@/content/sites";
 
-// Three columns that move at different speeds while the section scrolls by:
-// layered, editorial depth without touching scroll itself.
-const columns = [0, 1, 2].map((c) => sites.filter((_, i) => i % 3 === c));
+// One list, two layouts. Large screens: three columns that move at different
+// speeds while the section scrolls by (layered, editorial depth without touching
+// scroll itself). Phones and tablets: a swipeable row of cards.
 const travel = [
   [40, -40],
   [140, -140],
   [70, -70],
 ];
+// Where each column starts on large screens (the middle one lowest).
+const columnOffset = ["", "lg:translate-y-40", "lg:translate-y-16"];
 
 function SiteCard({ site }: { site: Site }) {
   return (
@@ -60,16 +62,16 @@ function SiteCard({ site }: { site: Site }) {
   );
 }
 
-function Column({ items, index, progress, rich }: { items: Site[]; index: number; progress: ReturnType<typeof useScroll>["scrollYProgress"]; rich: boolean }) {
-  const y = useTransform(progress, [0, 1], travel[index]);
+function SiteItem({ site, index, progress, rich }: { site: Site; index: number; progress: MotionValue<number>; rich: boolean }) {
+  const column = index % 3;
+  const y = useTransform(progress, [0, 1], travel[column]);
   return (
-    <m.ul style={rich ? { y } : undefined} className={`grid content-start gap-12 sm:grid-cols-2 lg:grid-cols-1 lg:gap-14 ${index === 1 ? "lg:pt-40" : index === 2 ? "lg:pt-16" : ""}`}>
-      {items.map((site) => (
-        <li key={site.slug} className="sd-tilt">
-          <SiteCard site={site} />
-        </li>
-      ))}
-    </m.ul>
+    <m.li
+      style={{ ...(rich ? { y } : {}), "--tilt": Math.floor(index / 3) % 2 ? "5deg" : "-5deg" } as React.CSSProperties}
+      className={`sd-tilt w-[80vw] max-w-[340px] shrink-0 snap-start sm:w-[44vw] sm:max-w-[400px] lg:w-auto lg:max-w-none ${columnOffset[column]}`}
+    >
+      <SiteCard site={site} />
+    </m.li>
   );
 }
 
@@ -108,12 +110,17 @@ export function WorkWebsites() {
       />
 
       <div className="mx-auto max-w-[1320px] px-4 sm:px-8">
-        {/* Three drifting columns on large screens; they stack on smaller ones. */}
-        <div className="mt-14 grid gap-12 lg:mt-20 lg:grid-cols-3 lg:gap-8">
-          {columns.map((items, i) => (
-            <Column key={i} items={items} index={i} progress={scrollYProgress} rich={rich} />
+        <ul
+          aria-label="Websites"
+          className="-mx-4 mt-12 flex snap-x snap-mandatory scroll-px-4 gap-4 overflow-x-auto overscroll-x-contain px-4 pt-6 pb-10 [scrollbar-width:none] sm:-mx-8 sm:scroll-px-8 sm:gap-6 sm:px-8 lg:mx-0 lg:mt-20 lg:grid lg:grid-cols-3 lg:gap-x-8 lg:gap-y-14 lg:overflow-visible lg:px-0 lg:pt-0 lg:pb-40 [&::-webkit-scrollbar]:hidden"
+        >
+          {sites.map((site, i) => (
+            <SiteItem key={site.slug} site={site} index={i} progress={scrollYProgress} rich={rich} />
           ))}
-        </div>
+        </ul>
+        <p aria-hidden className="font-mono text-[0.75rem] text-muted lg:hidden">
+          Swipe for all {sites.length} →
+        </p>
       </div>
     </section>
   );
